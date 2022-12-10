@@ -169,6 +169,7 @@ pay_basis_prorated_tibble =
     
 Median_base_salary_plot_prorated =
     payroll_data %>%
+    filter(pay_basis == "Prorated Annual") |> 
     left_join(pay_basis_prorated_tibble,  by = "county_name") %>%   
     ggplot(aes(x = reorder(county_name, median_base_salary_prorated), y = base_salary, fill = county_name)) +
     geom_boxplot() +
