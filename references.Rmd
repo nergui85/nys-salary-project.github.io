@@ -1,0 +1,22 @@
+---
+title: "References"
+output: html_document
+---
+
+Here are some resources we found helpful over the course of our project.
+
+#### **Motivating Article**
+[New York City Counsil Release](https://council.nyc.gov/press/2022/09/22/2264/): 
+
+#### **Related Work**
+
+[1](https://www.route-f ifty.com/finance/2022/10/cities-recover-financial-worries-loom/378358/) 
+
+[2](https://www.bls.gov/regions/new-york-new-jersey/news-release/countyemploymentandwages_newyorkcity.htm/)
+
+[3](https://www.osc.state.ny.us/reports/state-fiscal-year-2022-23-enacted-budget-analysis/)
+
+[4](https://ballotpedia.org/New_York_state_budget_and_finances/)
+
+[5](https://www.thebalancemoney.com/average-salary-information-for-us-workers-2060808#:~:text=Median%20Salary%20Information%20for%20U.S.,higher%20than%20a%20year%20earlier/)
+ 

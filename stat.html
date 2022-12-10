@@ -404,11 +404,40 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
-library(janitor)
-library(viridis)
-library(plotly)
-library(ggplot2)
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(viridis)</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## 
+## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>library(ggplot2)
 knitr::opts_chunk$set(
     echo = TRUE,
     warning = FALSE,
@@ -426,7 +455,7 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ─────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
@@ -435,6 +464,9 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div id="anova-analysis" class="section level1">
 <h1>ANOVA Analysis</h1>
+<p>For additional analysis, an ANOVA was done to determine whether there
+is a significant difference in mean base salary for municipal workers
+between the counties in New York State in 2022.</p>
 <p>Null Hypothesis(Ho) = The mean base salary is constant for all
 counties</p>
 <p>Alternative Hypothesis(H1) = The mean base salary is different for
@@ -444,8 +476,8 @@ all municipalities</p>
   mutate(county_name = as.factor(county_name)) %&gt;%
   group_by(county_name) %&gt;%
   summarise(ms_mean = base_salary)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>res = lm(ms_mean ~ factor(county_name), data = ms_model)
 
 anova_analysis = 
@@ -1739,6 +1771,31 @@ tukey_table</code></pre>
 </tr>
 </tbody>
 </table>
+<p>The null hypothesis for this test is that all the base salary means
+for each county are equal. The alternative hypothesis is that not all
+the base salary means for each county are equal. The level of
+significance for this test is 0.05. The p-value for this test is 0
+(Table 1). Based on the results of this F-test, at a level of
+significance of 0.05, we reject the null hypothesis as there is enough
+evidence to support that not all the base salary means for each county
+are equal.</p>
+<p>As an ANOVA does not indicate which base salary means are different
+and we need to control and preserve the overall family-wise error rate
+at the pre-specified alpha level of 0.05, we have also conducted a
+Tukey’s test. Based on Table 2, the following county comparisons have
+significant differences in mean salary for municipal workers in 2022 as
+the p-values are less than 0.05 and the null value of 0 is not included
+within the corresponding confidence interval: Bronx and Albany, Nassau
+and Albany, New York and Albany, Richmond and Albany, Kings and Bronx,
+New York and Bronx, Queens and Bronx, Richmond and Bronx, Sullivan and
+Bronx, Ulster and Bronx, Westchester and Bronx, Nassau and Delaware, New
+York and Delaware, Nassau and Kings, New York and Kings, Richmond and
+Kings, Ulster and Kings, Westchester and Kings, Queens and Nassau,
+Richmond and Nassau, Sullivan and Nassau, Ulster and Nassau, Westchester
+and Nassau, Queens and New York, Richmond and New York, Sullivan and New
+York, Ulster and New York, Westchester and New York, Ulster and Queens,
+Westchester and Queens, Ulster and Richmond, and Westchester and
+Richmond.</p>
 </div>
 
 
