@@ -407,11 +407,40 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
-library(janitor)
-library(viridis)
-library(plotly)
-library(ggplot2)
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(viridis)</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## 
+## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>library(ggplot2)
 knitr::opts_chunk$set(
     echo = TRUE,
     warning = FALSE,
@@ -429,7 +458,7 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ───────────────────────────────────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
@@ -464,39 +493,11 @@ class="section level3">
 <pre class="r"><code>number_job_titles_plot</code></pre>
 <p><img src="job_employees_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
 </div>
-<div id="total-number-of-job-titles-by-new-york-state-counties-1"
-class="section level3">
-<h3>Total Number of Job Titles by New York State Counties</h3>
-<pre class="r"><code>number_job_titles_plot =
-  payroll_data %&gt;%
-  group_by(county_name, job_title) %&gt;%
-  summarise(count = n()) %&gt;%
-  ungroup() %&gt;% 
-  group_by(county_name) %&gt;%
-  summarise(count = n()) %&gt;%
-  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1375),
-    breaks = seq(0, 1375, by = 275)) +
-  labs(
-    x = &quot;County Names&quot;,
-    y = &quot;Number of Job Titles&quot;,
-    title = &quot;The Number of Job Titles Held By Municipal Employees in New York State By County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>number_job_titles_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
-</div>
 <div
 id="plot-for-top-10-job-titles-throughout-the-new-york-state-counties"
-class="section level1">
-<h1>Plot for Top 10 Job Titles Throughout the New York State
-Counties</h1>
+class="section level3">
+<h3>Plot for Top 10 Job Titles Throughout the New York State
+Counties</h3>
 <pre class="r"><code>job_frequency =
 payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
@@ -533,7 +534,8 @@ job_frequency_plot =
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+</div>
 <div
 id="the-top-five-job-titles-held-by-municipal-employees-in-six-new-york-state-counties"
 class="section level3">
@@ -569,7 +571,7 @@ labs(title = &quot;The Top Five Job Titles Held by Municipal Employees in Six Ne
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 top_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
 </div>
 <div id="plot-for-top-10-job-titles-throughout-new-york-county"
 class="section level3">
@@ -609,7 +611,7 @@ job_frequency_newyork_plot =
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_newyork_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
 </div>
 <div id="plot-for-top-10-job-titles-throughout-albany-county"
 class="section level3">
@@ -644,7 +646,7 @@ job_frequency_albany_plot =
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_albany_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
 </div>
 <div
 id="bar-graph-for-the-number-of-municipal-employees-by-leave-status-in-new-york-state"
@@ -667,7 +669,7 @@ labs(
     fill = &quot;Leave Status&quot; 
     ) + 
 scale_y_continuous(labels = scales::comma)</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
 </div>
 <div
 id="pie-chart-for-percentages-of-municipal-employees-by-leave-status-across-all-counties"
@@ -689,8 +691,7 @@ par(xpd = TRUE)
 pie(Total_ls, labels = paste(labels, sep = &quot; &quot;, piepercent, &quot;%&quot;),
     main = &quot;Percentages of Municipal Employees by Leave Status Across All Counties&quot;, col =       viridis(length(Total_ls)))
 legend(&quot;topright&quot;, c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;),cex = 1.1, fill = viridis(length(Total_ls)))</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
-</div>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
 </div>
 
 

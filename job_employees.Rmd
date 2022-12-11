@@ -38,7 +38,6 @@ payroll_data =
 ```
 
 
-
 ### Total Number of Job Titles by New York State Counties
 
 ```{r}
@@ -66,35 +65,7 @@ number_job_titles_plot =
 number_job_titles_plot
 ```
 
-
-### Total Number of Job Titles by New York State Counties
-
-```{r}
-number_job_titles_plot =
-  payroll_data %>%
-  group_by(county_name, job_title) %>%
-  summarise(count = n()) %>%
-  ungroup() %>% 
-  group_by(county_name) %>%
-  summarise(count = n()) %>%
-  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = "dodge", stat = "identity") +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1375),
-    breaks = seq(0, 1375, by = 275)) +
-  labs(
-    x = "County Names",
-    y = "Number of Job Titles",
-    title = "The Number of Job Titles Held By Municipal Employees in New York State By County",
-    fill = "New York State County Names"
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-number_job_titles_plot
-```
-
-# Plot for Top 10 Job Titles Throughout the New York State Counties
+### Plot for Top 10 Job Titles Throughout the New York State Counties
 
 ```{r}
 job_frequency =
