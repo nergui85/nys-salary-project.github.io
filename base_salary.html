@@ -336,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Exploratory Analyses
+    Exploratory Analysis
      
     <span class="caret"></span>
   </a>
@@ -345,10 +345,10 @@ div.tocify {
       <a href="base_salary.html">Base Salary</a>
     </li>
     <li>
-      <a href="job_employees.html">Job and Employee</a>
+      <a href="job_employees.html">Job Titles and Leave Status</a>
     </li>
     <li>
-      <a href="ot_other_pay.html">Over Time and Other Pay</a>
+      <a href="ot_other_pay.html">Overtime and Other Pay</a>
     </li>
   </ul>
 </li>
@@ -410,40 +410,11 @@ div.tocify {
 <center>
 <img src="images/wall_street_workers.jpg" style="width:100%">
 </center>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ───────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(janitor)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;janitor&#39;
-## 
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
-<pre class="r"><code>library(viridis)</code></pre>
-<pre><code>## Loading required package: viridisLite</code></pre>
-<pre class="r"><code>library(plotly)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plotly&#39;
-## 
-## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot
-## 
-## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter
-## 
-## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
-<pre class="r"><code>library(ggplot2)
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
 knitr::opts_chunk$set(
     echo = TRUE,
     warning = FALSE,
@@ -460,20 +431,8 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code></pre>
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ───────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
-## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div id="mean-base-salary-by-new-york-state-counties-plot"
-class="section level2">
-<h2>Mean Base Salary By New York State Counties Plot</h2>
-<p>Exploratory analysis for our primary outcome of whether there is a
-significant difference in the mean base salary of employees in New York
-State by county in 2022.</p>
+<div id="base-salary" class="section level2">
+<h2>Base Salary</h2>
 <pre class="r"><code>mean_base_salary_plot =
   payroll_data %&gt;%
   group_by(county_name) %&gt;%
@@ -495,13 +454,6 @@ State by county in 2022.</p>
 
 mean_base_salary_plot</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
-<div id="base-salary-by-bases" class="section level5 tabset">
-<h5 class="tabset">Base Salary By Bases</h5>
-<div id="base-salary-by-annually" class="section level6">
-<h6>Base Salary by Annually</h6>
-<p>Boxplots was created to illustrate the differences in the median base
-salary by annually for all New York state counties.</p>
-<p>Base Salary By Annual Pay Basis By New York State Counties Plot</p>
 <pre class="r"><code>pay_basis_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Annually&quot;) |&gt; 
@@ -522,17 +474,12 @@ Median_base_salary_plot_annually =
     labs(
     x = &quot;County Names&quot;,
     y = &quot; Base Salary ($)&quot;,
-    title = &quot;Base Salary For Annually-Paid Municipal Employees For Each New York State County&quot;, 
+    title = &quot;Base Salary For Municipal Employees Paid Annually For Each New York State County&quot;, 
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 Median_base_salary_plot_annually</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
-</div>
-<div id="base-salary-by-daily" class="section level6">
-<h6>Base Salary by Daily</h6>
-<p>Boxplots was created to illustrate the differences in the median base
-salary by daily for all New York state counties.</p>
 <pre class="r"><code>pay_basis_daily_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Daily&quot;) |&gt; 
@@ -553,17 +500,12 @@ Median_base_salary_plot_daily =
     labs(
     x = &quot;County Names&quot;,
     y = &quot; Base Salary ($)&quot;,
-    title = &quot;Base Salary For Daily-Paid Municipal Employees For Each New York State County&quot;, 
+    title = &quot;Base Salary For Municipal Employees Paid Daily For Each New York State County&quot;, 
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 Median_base_salary_plot_daily</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
-</div>
-<div id="base-salary-by-hourly" class="section level6">
-<h6>Base Salary by Hourly</h6>
-<p>Boxplots was created to illustrate the differences in the median base
-salary by hourly for all New York state counties.</p>
 <pre class="r"><code>pay_basis_hourly_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Hourly&quot;) |&gt; 
@@ -584,17 +526,12 @@ median_base_salary_plot_hourly =
     labs(
     x = &quot;County Names&quot;,
     y = &quot; Base Salary ($)&quot;,
-    title = &quot;Base Salary For Hourly-Paid Municipal Employees For Each New York State County&quot;,
+    title = &quot;Base Salary For Municipal Employees Paid Hourly For Each New York State County&quot;,
      fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 median_base_salary_plot_hourly</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
-</div>
-<div id="base-salary-by-prorated" class="section level6">
-<h6>Base Salary by Prorated</h6>
-<p>Boxplots was created to illustrate the differences in the median base
-salary based on prorated for all New York state counties.</p>
 <pre class="r"><code>pay_basis_prorated_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
@@ -615,15 +552,13 @@ median_base_salary_plot_prorated =
     labs(
     x = &quot;County Names&quot;,
     y = &quot; Base Salary ($)&quot;,
-    title = &quot;Base Salary For Prorated-Annually-Paid Municipal Employees For Each New York State County&quot;,
+    title = &quot;Prorated Base Salary For Municipal Employees For Each New York State County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 
 median_base_salary_plot_prorated</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
-</div>
-</div>
 </div>
 
 

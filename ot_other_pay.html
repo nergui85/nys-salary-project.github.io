@@ -11,7 +11,7 @@
 
 
 
-<title>Over Time and Other Pay</title>
+<title>Overtime and Other Pay</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -336,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Exploratory Analyses
+    Exploratory Analysis
      
     <span class="caret"></span>
   </a>
@@ -345,10 +345,10 @@ div.tocify {
       <a href="base_salary.html">Base Salary</a>
     </li>
     <li>
-      <a href="job_employees.html">Job and Employee</a>
+      <a href="job_employees.html">Job Titles and Leave Status</a>
     </li>
     <li>
-      <a href="ot_other_pay.html">Over Time and Other Pay</a>
+      <a href="ot_other_pay.html">Overtime and Other Pay</a>
     </li>
   </ul>
 </li>
@@ -402,11 +402,14 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Over Time and Other Pay</h1>
+<h1 class="title toc-ignore">Overtime and Other Pay</h1>
 
 </div>
 
 
+<center>
+<img src="images/overtime.webp" style="width:100%">
+</center>
 <pre class="r"><code>library(tidyverse)
 library(janitor)
 library(viridis)
@@ -428,17 +431,8 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code></pre>
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ───────────────────────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
-## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div id="total-other-pay-by-new-york-counties-plot"
-class="section level3">
-<h3>Total Other Pay by New York Counties Plot</h3>
+<div id="total-other-pay" class="section level3">
+<h3>Total Other Pay</h3>
 <pre class="r"><code>median_tibble =
   payroll_data %&gt;%
   group_by(county_name) %&gt;%
@@ -464,9 +458,8 @@ median_other_pay_plot =
 median_other_pay_plot</code></pre>
 <p><img src="ot_other_pay_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
 </div>
-<div id="total-overtime-paid-by-new-york-state-counties-plot"
-class="section level3">
-<h3>Total Overtime Paid By New York State Counties Plot</h3>
+<div id="total-overtime-paid" class="section level3">
+<h3>Total Overtime Paid</h3>
 <pre class="r"><code>overtime_tibble = 
     payroll_data %&gt;% 
     group_by(county_name) %&gt;% 

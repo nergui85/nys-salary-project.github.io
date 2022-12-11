@@ -7,9 +7,9 @@ navbar:
       menu:
       - text: "Base Salary"
         href: base_salary.html
-      - text: "Job and Employee"
+      - text: "Job Titles and Leave Status"
         href: job_employees.html
-      - text: "Over Time and Other Pay"
+      - text: "Overtime and Other Pay"
         href: ot_other_pay.html 
     - text: "Statistical Analysis"
       menu: 

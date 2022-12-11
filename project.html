@@ -345,10 +345,10 @@ div.tocify {
       <a href="base_salary.html">Base Salary</a>
     </li>
     <li>
-      <a href="job_employees.html">Job and Employee</a>
+      <a href="job_employees.html">Job Titles and Leave Status</a>
     </li>
     <li>
-      <a href="ot_other_pay.html">Over Time and Other Pay</a>
+      <a href="ot_other_pay.html">Overtime and Other Pay</a>
     </li>
   </ul>
 </li>
@@ -407,40 +407,14 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(janitor)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;janitor&#39;
-## 
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
-<pre class="r"><code>library(viridis)</code></pre>
-<pre><code>## Loading required package: viridisLite</code></pre>
-<pre class="r"><code>library(plotly)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plotly&#39;
-## 
-## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot
-## 
-## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter
-## 
-## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
-<pre class="r"><code>library(ggplot2)
+<center>
+<img src="images/project.report.webp" style="width:100%">
+</center>
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
 knitr::opts_chunk$set(
     echo = TRUE,
     warning = FALSE,
@@ -457,14 +431,6 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code></pre>
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
-## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p> </p>
 <div id="motivation" class="section level2">
 <h2>Motivation</h2>
@@ -552,13 +518,15 @@ York county, Richmond county, and Queens county?</li>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>The data that was used for this project is from a NYC Open Data
-webpage (hyperlink this) entitled “Citywide Payroll Data (Fiscal Year)”.
-It was collected with the purpose of understanding how New York City’s
-budget is utilized on salary and overtime pay for all municipal
-employees. However, it is important to note that the data contains
-information pertaining to municipal employees throughout various
-counties in New York State. This source of data is updated annually and
-was last updated on October 28, 2022.</p>
+webpage <a
+href="https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e">link</a>
+entitled “Citywide Payroll Data (Fiscal Year)”. It was collected with
+the purpose of understanding how New York City’s budget is utilized on
+salary and overtime pay for all municipal employees. However, it is
+important to note that the data contains information pertaining to
+municipal employees throughout various counties in New York State. This
+source of data is updated annually and was last updated on October 28,
+2022.</p>
 <p>The raw data consisted of 5,109,775 rows and 17 columns, which were
 fiscal year, payroll number, the name of the agency, last name of the
 employee, first name of the employee, middle initial of the employee,
@@ -672,10 +640,9 @@ class="section level3">
     title = &quot;Figure 2. The Number of Job Titles Held By Municipal Employees of New York State By County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>number_job_titles_plot</code></pre>
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+number_job_titles_plot</code></pre>
 <p><img src="project_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
 <p>We investigated the number of job titles that are held by municipal
 employees in New York State by county in 2022 through a bar graph
@@ -868,10 +835,9 @@ payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
-    ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>job_frequency_data = 
+    ungroup()
+
+job_frequency_data = 
     job_frequency %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
@@ -929,10 +895,9 @@ State Counties Plot</h3>
    group_by(county_name, job_title) %&gt;%
    summarise(number_of_people = n()) %&gt;%
    arrange(desc(number_of_people)) %&gt;%
-   slice(1:5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>top5_freq_n = 
+   slice(1:5)
+
+top5_freq_n = 
   top5_freq %&gt;%
    mutate(
      job_title = as.factor(job_title),
@@ -983,10 +948,9 @@ payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
-    ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>job_frequency_newyork_data = 
+    ungroup()
+
+job_frequency_newyork_data = 
     job_frequency_newyork %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
@@ -1023,10 +987,9 @@ payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
-    ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>job_frequency_albany_data = 
+    ungroup()
+
+job_frequency_albany_data = 
     job_frequency_albany %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
@@ -1210,12 +1173,10 @@ a leave status of active. 81.1 % of the municipal employees were
 actively working which was to be expected. 17.2 % of employees have
 stopped working at their municipal jobs and 1.7 municipal employees were
 on leave.</p>
-<p>Work Cited: 1. <a
-href="https://en.wikipedia.org/wiki/Economy_of_New_York_City#"
-class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_City#</a>:~:text=The%20economy%20of%20New%20York,the%20world’s%20premier%20financial%20center.
-<a href="https://en.wikipedia.org/wiki/Economy_of_New_York_(state)"
-class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_(state)</a></p>
-<p>Additional Analysis:</p>
+</div>
+</div>
+<div id="additional-analysis" class="section level2">
+<h2>Additional Analysis</h2>
 <p>For additional analysis, an ANOVA was done to determine whether there
 is a significant difference in mean base salary for municipal workers
 between the counties in New York State in 2022. The null hypothesis is
@@ -1244,8 +1205,9 @@ and Nassau, Queens and New York, Richmond and New York, Sullivan and New
 York, Ulster and New York, Westchester and New York, Ulster and Queens,
 Westchester and Queens, Ulster and Richmond, and Westchester and
 Richmond.</p>
-<p>Discussions</p>
-<p>Findings:</p>
+</div>
+<div id="discussions" class="section level2">
+<h2>Discussions</h2>
 <p>In our exploratory analysis, we looked at leave status, base salary,
 overtime pay, job titles, total other pay, and base salary by pay basis
 across New York State counties in 2022.</p>
@@ -1319,10 +1281,13 @@ significant differences were: New York and Albany, Kings and Bronx, New
 York and Bronx, Richmond and Kings, and Ulster and Kings. Ultimately, we
 saw that most of the significant differences were between NYC’s 5
 boroughs and Albany as their p values were less than 0.05.</p>
-<p>Work Cited:</p>
+</div>
+<div id="work-cited" class="section level2">
+<h2>Work Cited:</h2>
 <ol style="list-style-type: decimal">
-<li>(<a href="https://www.route-f" class="uri">https://www.route-f</a>
-ifty.com/finance/2022/10/cities-recover-financial-worries-loom/378358/)</li>
+<li>(<a
+href="https://www.route-fifty.com/finance/2022/10/cities-recover-financial-worries-loom/378358/"
+class="uri">https://www.route-fifty.com/finance/2022/10/cities-recover-financial-worries-loom/378358/</a>)</li>
 <li><a
 href="https://www.bls.gov/regions/new-york-new-jersey/news-release/countyemploymentandwages_newyorkcity.htm"
 class="uri">https://www.bls.gov/regions/new-york-new-jersey/news-release/countyemploymentandwages_newyorkcity.htm</a></li>
@@ -1330,16 +1295,12 @@ class="uri">https://www.bls.gov/regions/new-york-new-jersey/news-release/countye
 href="https://www.osc.state.ny.us/reports/state-fiscal-year-2022-23-enacted-budget-analysis"
 class="uri">https://www.osc.state.ny.us/reports/state-fiscal-year-2022-23-enacted-budget-analysis</a></li>
 <li><a href="https://ballotpedia.org/New_York_state_budget_and_finances"
-class="uri">https://ballotpedia.org/New_York_state_budget_and_finances</a>
-<a
-href="https://www.thebalancemoney.com/average-salary-information-for-us-workers-2060808#"
-class="uri">https://www.thebalancemoney.com/average-salary-information-for-us-workers-2060808#</a>:~:text=Median%20Salary%20Information%20for%20U.S.,higher%20than%20a%20year%20earlier.</li>
+class="uri">https://ballotpedia.org/New_York_state_budget_and_finances</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Economy_of_New_York_City"
 class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_City</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Economy_of_New_York_(state)"
 class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_(state)</a>.</li>
 </ol>
-</div>
 </div>
 
 

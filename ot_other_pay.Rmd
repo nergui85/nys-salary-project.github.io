@@ -1,5 +1,5 @@
 ---
-title: "Over Time and Other Pay"
+title: "Overtime and Other Pay"
 output: 
   html_document:
     code_folding: hide
@@ -9,7 +9,13 @@ output:
 ---
 
 
-```{r}
+<center>
+<img src="images/overtime.webp" style="width:100%">
+</center>
+
+
+
+```{r, message = FALSE, warning=FALSE}
 library(tidyverse)
 library(janitor)
 library(viridis)
@@ -32,14 +38,14 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 ```
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 payroll_data = 
     read_csv("data/payroll_data.csv")
 ```
 
-### Total Other Pay by New York Counties Plot
+### Total Other Pay 
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 median_tibble =
   payroll_data %>%
   group_by(county_name) %>%
@@ -65,9 +71,9 @@ median_other_pay_plot =
 median_other_pay_plot
 ```
 
-### Total Overtime Paid By New York State Counties Plot
+### Total Overtime Paid 
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 overtime_tibble = 
     payroll_data %>% 
     group_by(county_name) %>% 

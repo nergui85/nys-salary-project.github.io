@@ -18,7 +18,7 @@ output:
 
 
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 library(tidyverse)
 library(janitor)
 library(viridis)
@@ -41,16 +41,15 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 ```
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 payroll_data = 
     read_csv("data/payroll_data.csv")
 ```
 
-## Mean Base Salary By New York State Counties Plot
+## Base Salary
 
-Exploratory analysis for our primary outcome of whether there is a significant difference in the mean base salary of employees in New York State by county in 2022. 
 
-```{r}
+```{r, message = FALSE, warning=FALSE}
 
 mean_base_salary_plot =
   payroll_data %>%
@@ -76,14 +75,7 @@ mean_base_salary_plot
 ```
  
 
-##### Base Salary By Bases {.tabset}
-###### Base Salary by Annually
-
-Boxplots was created to illustrate the differences in the median base salary by annually for all New York state counties.
-
-Base Salary By Annual Pay Basis By New York State Counties Plot
-
-```{r}
+```{r, message = FALSE, warning=FALSE}
 pay_basis_tibble = 
     payroll_data %>%
     filter(pay_basis == "Annually") |> 
@@ -104,7 +96,7 @@ Median_base_salary_plot_annually =
     labs(
     x = "County Names",
     y = " Base Salary ($)",
-    title = "Base Salary For Annually-Paid Municipal Employees For Each New York State County", 
+    title = "Base Salary For Municipal Employees Paid Annually For Each New York State County", 
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
@@ -112,11 +104,7 @@ Median_base_salary_plot_annually
 ```
 
 
-###### Base Salary by Daily
-
-Boxplots was created to illustrate the differences in the median base salary by daily for all New York state counties.
-
-```{r}
+```{r, message = FALSE, warning=FALSE}
 pay_basis_daily_tibble = 
     payroll_data %>%
     filter(pay_basis == "Daily") |> 
@@ -137,18 +125,15 @@ Median_base_salary_plot_daily =
     labs(
     x = "County Names",
     y = " Base Salary ($)",
-    title = "Base Salary For Daily-Paid Municipal Employees For Each New York State County", 
+    title = "Base Salary For Municipal Employees Paid Daily For Each New York State County", 
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 Median_base_salary_plot_daily
 ```
 
-###### Base Salary by Hourly 
 
-Boxplots was created to illustrate the differences in the median base salary by hourly for all New York state counties.
-
-```{r}
+```{r, message = FALSE, warning=FALSE}
 pay_basis_hourly_tibble = 
     payroll_data %>%
     filter(pay_basis == "Hourly") |> 
@@ -169,7 +154,7 @@ median_base_salary_plot_hourly =
     labs(
     x = "County Names",
     y = " Base Salary ($)",
-    title = "Base Salary For Hourly-Paid Municipal Employees For Each New York State County",
+    title = "Base Salary For Municipal Employees Paid Hourly For Each New York State County",
      fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
@@ -177,11 +162,7 @@ median_base_salary_plot_hourly
 ```
 
 
-###### Base Salary by Prorated
-
-Boxplots was created to illustrate the differences in the median base salary based on prorated for all New York state counties.
-
-```{r}
+```{r, message = FALSE, warning=FALSE}
 pay_basis_prorated_tibble = 
     payroll_data %>%
     filter(pay_basis == "Prorated Annual") |> 
@@ -202,7 +183,7 @@ median_base_salary_plot_prorated =
     labs(
     x = "County Names",
     y = " Base Salary ($)",
-    title = "Base Salary For Prorated-Annually-Paid Municipal Employees For Each New York State County",
+    title = "Prorated Base Salary For Municipal Employees For Each New York State County",
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
