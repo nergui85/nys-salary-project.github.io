@@ -71,7 +71,7 @@ median_other_pay_plot =
 median_other_pay_plot
 ```
 
-### Total Overtime Paid 
+### Total Overtime Pay 
 
 ```{r, message = FALSE, warning=FALSE}
 overtime_tibble = 

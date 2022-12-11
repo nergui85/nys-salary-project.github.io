@@ -91,8 +91,9 @@ The data was read into R as a .csv file using the “read_csv” function.  All 
 
 ## Exploratory Analysis 
 
+ 
 ### Mean Base Salary By New York State Counties
-
+ 
 ```{r}
 mean_base_salary_plot =
   payroll_data %>%
@@ -112,15 +113,15 @@ mean_base_salary_plot =
     fill = "New York State County Names"
   ) + 
   theme(axis.text.x = element_text(angle = 80, vjust = 0.5, hjust = 0.50)) 
-
+ 
 mean_base_salary_plot
 ```
-
+ 
 Exploratory analysis for our primary outcome of whether there is a significant difference in the mean base salary of employees in New York State by county in 2022 was conducted by creating a bar graph (Figure 1).  Figure 1 shows the average base salary for municipal employees of New York State by county.  This figure illustrates that Albany county has the highest mean base salary for its municipal employees, while Nassau county has the lowest average base salary and New York county has the second lowest mean base salary.  All of the other counties have similar average base salaries.  However, we hypothesized that New York county would have the highest mean salary as it serves as a major financial center within the United States compared to Albany county, which is the capital of New York State.
-
-
+ 
+ 
 ### Total Number of Job Titles by New York State Counties Plot
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 number_job_titles_plot =
   payroll_data %>%
@@ -142,24 +143,24 @@ number_job_titles_plot =
     fill = "New York State County Names"
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 number_job_titles_plot
 ```
-
+ 
 We investigated the number of job titles that are held by municipal employees in New York State by county in 2022 through a bar graph (Figure 2).  Figure 2 conveys the number of job titles that are held by employees within each of the 16 counties in New York State.  This figure demonstrates that Orange county has the lowest number of job titles, while Albany has the third lowest number of job titles.  It is important to note that each of the five boroughs in New York City are among the counties that have the five highest counts of job titles that are held by municipal employees in 2022: New York county has the highest, which was expected; Queens county has the second highest number; Kings county has the third highest number; Bronx has the fourth highest number; Richmond has the fifth highest number.  We did expect that New York county would have the highest number of job titles held by municipal employees and we also expected that the other boroughs of New York City would also have among the highest counts due to the large size of the populations within each of these counties within New York City.  All of the other counties within New York State may have low frequencies of job titles that will be held by municipal workers in 2022, because of their smaller population sizes.
-
-
+ 
+ 
 ### Base Salary By Annual Pay Basis By New York State Counties Plot
-
+ 
 Boxplots was created to illustrate the differences in the median base salary by annually, daily, hourly,  and based on prorated for all New York state counties .
-
+ 
 ```{r}
 pay_basis_tibble = 
     payroll_data %>%
     filter(pay_basis == "Annually") |> 
     group_by(county_name) %>% 
     summarise(median_base_salary = median(base_salary))
-
+ 
 median_base_salary_plot_annually =
     payroll_data %>%
     filter(pay_basis == "Annually") |> 
@@ -177,22 +178,22 @@ median_base_salary_plot_annually =
     title = "Figure 3. Base Salary For Annually-Paid Municipal Employees For Each New York State County", 
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 median_base_salary_plot_annually
 ```
-
-Figure 3 shows the base salary for municipal employees that are paid annually in New York State by county. According to this Figure 3, Orange, Greene, Putnam and Bronx have the lowest median base salary around 60,000 dollars for its municipal employees, whereas Albany has the highest median base salary with around 85,000 dollars followed by New York county. Compared to the mean base salary, median base salary in New York States was significantly higher after Albany, which was similar to our hypothesis that New York County would have a higher income level.
-
-
+ 
+Figure 3 shows the base salary for municipal employees that are paid annually in New York State by county. According to this figure , Orange county has the lowest median base salary around 60,000 dollars for its municipal employees, whereas Albany has the highest median base salary of about 80,000 dollars followed by New York county. Compared to the mean base salary, the median base salary in New York  was similar to Albany.
+ 
+ 
 ### Base Salary By Daily Pay Basis By New York State Counties Plot
-
+ 
 ```{r}
 pay_basis_daily_tibble = 
     payroll_data %>%
     filter(pay_basis == "Daily") |> 
     group_by(county_name) |> 
     summarise(median_base_salary_daily = median(base_salary))
-
+ 
 median_base_salary_plot_daily =
     payroll_data %>%
     filter(pay_basis == "Daily") |> 
@@ -210,21 +211,21 @@ median_base_salary_plot_daily =
     title = "Figure 4. Base Salary For Daily-Paid Municipal Employees For Each New York State County", 
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 median_base_salary_plot_daily
 ```
-
-Figure 4 shows the daily median base salary for municipal employees of New York State by county. The daily median salary ranged between 50 to 65 dollars. Figure illustrates that Bronx, Delaware, Queens and Ulster have the lowest daily median base salary which was around 350 dollars while Albany, Dutchess and Greene ranked highest with 500 dollars. The rest of the counties placed in between above values. Daily median base salary for New York County has many outliers indicating that median values are not suitable to compute since the range of the daily base salary varied greatly. 
+ 
+Figure 4 shows the median base salary for municipal employees that are paid daily in New York State by county. The daily median base salary ranged from 25 to 625 dollars. This figure illustrates that New York county had the lowest daily median base salary of about 25 dollars. Albany, Dutchness, and Greene county had the highest daily median base salary at about 500 dollars. The rest of the counties placed in between the aforementioned values.  It is important to note that the daily base salary for New York County had many outliers indicating that  the range of the daily base salary varied greatly. 
  
 ### Base Salary By Hourly Pay Basis By New York State Counties Plot
-
+ 
 ```{r}
 pay_basis_hourly_tibble = 
     payroll_data %>%
     filter(pay_basis == "Hourly") |> 
     group_by(county_name) %>%
     summarise(median_base_salary_hourly = median(base_salary))
-
+ 
 median_base_salary_plot_hourly =
     payroll_data %>%
     filter(pay_basis == "Hourly") |> 
@@ -242,14 +243,14 @@ median_base_salary_plot_hourly =
     title = "Figure 5. Base Salary For Hourly-Paid Municipal Employees For Each New York State County",
      fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 median_base_salary_plot_hourly
 ```
-
-Figure 5 illustrates hourly median base salary for municipal employees of New York State by county. The hourly median salary ranged between 0 to 95 dollars. Figure  illustrates that New York County has the lowest hourly median base salary with 0 dollars while Nassau ranked highest around 65 to 70 dollars followed by Dutchess and Sullivan, Schoharie respectivly. It shows that highly populated counties have lower hourly median base salary compared to less populated counties. 
-
+ 
+Figure 5 illustrates the median base salary for municipal employees that were paid hourly in New York State by county. The hourly median salary ranged between 0 to 95 dollars. New York County has the lowest hourly median base salary at about 0 dollars and has the most outliers. Nassau county has the highest hourly median base salary around 65 dollars.  This shows that highly populated counties have lower hourly median base salaries compared to less populated counties. 
+ 
 ### Base Salary By Prorated Annual Pay Basis By New York State Counties Plot
-
+ 
 ```{r}
 pay_basis_prorated_tibble = 
     payroll_data %>%
@@ -274,16 +275,16 @@ median_base_salary_plot_prorated =
     title = "Figure 6. Base Salary For Prorated-Annually-Paid Municipal Employees For Each New York State County",
     fill = "New York State County Names"
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-
+ 
+ 
 median_base_salary_plot_prorated
 ```
-
-Figure 6 displays prorated median base salary for municipal employees of New York State by county. A prorated salary is when an employee gets paid based on the number of hours or days they work in a pay period, instead of their regular salary. When compared to annual median base salary, prorated median base salary was highest for Ulster followed by New York Country where Bronx and Richmond ranked the lowest. This indicates that employees in Ulster and New York Counties work longer hours and with extra days. This finding is in line with our hypothesis that the Median Base Salary for New York County was higher according to its prorated values. 
-
-
+ 
+Figure 6 displays the median base salary for municipal employees that are prorated annually in New York State by county. The county with the highest median base salary that is prorated annually was Ulster county at about 50,000 dollars followed by New York county. The counties with the lowest median base salary that was prorated annually were Bronx, Richmond, Westchester, Kings, and Queens counties at around 35,000 dollars. 
+ 
+ 
 ### Top 10 Job Titles Throughout the New York State Counties
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 job_frequency =
 payroll_data %>%
@@ -291,7 +292,7 @@ payroll_data %>%
     summarise(job_frequency = n()) %>%
     arrange(desc(job_frequency)) %>%
     ungroup()
-
+ 
 job_frequency_data = 
     job_frequency %>%
     top_n(job_frequency, n = 10) %>%
@@ -318,14 +319,14 @@ job_frequency_plot =
     fill = "New York State County Names"
   ) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 job_frequency_plot
 ```
-
+ 
 Furthermore, an exploratory analysis was conducted to comprehend the top ten job titles that are held by municipal workers throughout the counties in New York State in 2022 through a bar graph (Figure 7).  Based on Figure 7, the top ten job titles by frequency are Correction Officer, School Aide, Police Officer, Substitute Education Paraprofessional, General Education Teacher, Special Education Teacher, Education Paraprofessional, Election Worker, Teacher, and Teacher Per Session, respectively in ascending order.  The top 9 job titles by frequency were in New York county with Teacher Per Session being the job title with the highest frequency.  The job title with the 10th highest frequency was in Queens county and was a Correction Officer.  We did predict that one of the teacher job titles would be the job title with the highest frequency, but we did not expect that it would be the Teacher Per Session job title.  We also expected that all of the top 10 job titles with the highest frequencies would be in New York County.  Overall, this figure supports some of our predictions and illustrates that the job title with the highest frequency in Queens is a Correction Officer.
-
+ 
 ### The Top Five Job Titles Held by Municipal Employees in Six New York State Counties Plot
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 top5_freq = 
   payroll_data %>%
@@ -334,7 +335,7 @@ top5_freq =
    summarise(number_of_people = n()) %>%
    arrange(desc(number_of_people)) %>%
    slice(1:5)
-
+ 
 top5_freq_n = 
   top5_freq %>%
    mutate(
@@ -354,14 +355,14 @@ scale_y_continuous(
 labs(title = "Figure 8. The Top Five Job Titles Held by Municipal Employees in Six New York State Counties",x = "Job Title", y = "Number of Municipal Employees")  + 
   guides(color = guide_legend(title = "New York State County Names")) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 top_plot
 ```
-
-Since we are based in New York City, NYC, we decided to look at the top 5 job titles for each of the counties for the 5 boroughs in NYC and compare that with top 5 job titles with the top 5 job titles in Albany county because Albany has the highest mean base salary.  We chose Richmond county, Bronx county, Kings county, Queens county, and New York county as they all represent New York City boroughs which is one of the largest financial epicenters.  These counties were also chosen because when looking at the bar graph for the number of job titles held by employees, you saw that the ones that had the most number of job titles were the counties that were selected.  We conducted a scatterplot to see which county has a high number of specific job titles.  Looking at the plot, you can see that in New York county, the number of teachers per session was 113,882 meaning that New York County has the highest number of teachers per session among the six counties.  Queens county had the highest number of correction officers, 7,708.  For Bronx county, their highest job title was a police officer, 3,807. However, it was Kings county who had the most police officers as they had 5,815.  Albany county had the most number of assistant legislative representatives which was 4. 
-
+ 
+Since we are based in New York City, we decided to look at the top 5 job titles for each of the counties for the 5 boroughs in NYC and compare them with the top 5 job titles in Albany county because Albany has the highest mean base salary.  We chose Richmond county, Bronx county, Kings county, Queens county, and New York county as they all represent boroughs of New York City, which is one of the largest financial epicenters.  These counties were also chosen because they had the highest number of job titles.  We conducted a scatterplot to see the top 5 job titles within each of the aforementioned counties.  Looking at the plot, one can observe that in New York county, the number of Teachers per Session was 113,882 meaning that New York County has the highest number of teachers per session among the six counties.  Queens county had the highest number of correction officers, 7,708.  For Bronx county, their highest job title was a Police Officer, 3,807. However, Kings county had the most Police Officers as they had 5,815. Albany county had the most number of Assistant Legislative Representatives, which was 4. 
+ 
 ### Plot for Top 10 Job Titles Throughout New York County
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 job_frequency_newyork =
 payroll_data %>%
@@ -370,7 +371,7 @@ payroll_data %>%
     summarise(job_frequency = n()) %>%
     arrange(desc(job_frequency)) %>%
     ungroup()
-
+ 
 job_frequency_newyork_data = 
     job_frequency_newyork %>%
     top_n(job_frequency, n = 10) %>%
@@ -395,13 +396,13 @@ job_frequency_newyork_plot =
     y = "Number of Municipal Employees",
     title = "Figure 9. The Top 10 Job Titles Held By Municipal Employees in New York County") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 job_frequency_newyork_plot
 ```
-
-
+ 
+ 
 ### Plot for Top 10 Job Titles Throughout Albany County
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 job_frequency_albany =
 payroll_data %>%
@@ -410,7 +411,7 @@ payroll_data %>%
     summarise(job_frequency = n()) %>%
     arrange(desc(job_frequency)) %>%
     ungroup()
-
+ 
 job_frequency_albany_data = 
     job_frequency_albany %>%
     top_n(job_frequency, n = 10) %>%
@@ -430,21 +431,21 @@ job_frequency_albany_plot =
     y = "Number of Municipal Employees",
     title = "Figure 10. The 6 Job Titles Held By Municipal Employees In Albany County") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 job_frequency_albany_plot
 ```
-
-A bar plot was done based on the top job titles for New York County and Albany We assumed that the top ten job titles would explain this finding. Based on figures 9 and 10, the top ten job titles in New York County are community associate, school aide, police officer, substitute education, election worker, teacher and Teacher Per Session. However, there were only 6 top titles in Albany, which are supervisor, assistant director, special assistant, watershed maintainer, assistant legislative representative. As we expected these top job titles explained our main finding on mean salary that top 6 job titles were higher rank jobs as compared to New York County. 
+The top job titles for New York county and Albany county were illustrated through barplots.  Based on Figures 9 and 10, the top ten job titles in New York County are Community Associate, School Aide, Police Officer, Substitute Education Paraprofessional, General Education Teacher, Special Education Teacher, Education Paraprofessional,  Election Worker, Teacher, and Teacher Per Session.  The job title with the highest number of employees in New York county is Teacher per Session, while the job title with the lowest number of employees is Community Associate. The top six job titles in Albany County are Assistant Legislative Representative, Watershed Maintainer, Special Assistant, Assistant Director of Intergovernmental Relations, Supervisor, Stationary Engineer. The job title with the highest number of employees in Albany county is Assistant Legislative Representative, while the job title with the lowest number of employees is Stationary Engineer.
  
-
+ 
+ 
 ### Total Overtime Paid By New York State Counties Plot 
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 overtime_tibble = 
     payroll_data %>% 
     group_by(county_name) %>% 
     summarise(median_total_ot_paid = median(total_ot_paid))
-
+ 
 median_ot_paid_plot = 
     payroll_data |> 
     left_join(overtime_tibble, by = "county_name") |> 
@@ -462,20 +463,20 @@ median_ot_paid_plot =
     fill = "New York State County Names"
   ) + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+ 
 median_ot_paid_plot
 ```
-
-Median total overtime pay for municipal employees in New York State by its counties in 2022 is displayed in the box plot. Figure 11 illustrated that New York county was among the lowest median counties for total overtime along with Albany, Nassau, New York and Orange which was close to 0 dollars, while Greene ranked highest median for total overtime pay with around 7000 dollars. This pattern is similar to that of New York County for median for total other pay where it placed the lowest in Figure. We assumed that since New York County has a big market with more opportunities. This finding supported our hypothesis and median for prorated annual base salary Figure where New York County ranked highest. In addition, it was noticeable that New York county has the greatest number of outliers, which may be due to the large population within this county whereas Greene, Orange and Dutchess counties did have outliers.
-
+ 
+This boxplot shows the median total overtime pay for municipal employees in New York State by its counties in 2022. Figure 11 illustrates that New York county was among the counties with the lowest median total overtime pay along with Albany, Nassau, and Orange counties at around 1,000 dollars. The county with the highest median total overtime pay is Greene county at around 7,500 dollars.  In addition, it was noticeable that New York county has the greatest number of outliers, which may be due to the large population within this county, whereas Greene, Orange and Dutchess counties did have outliers.
+ 
 ### Total Other Pay by New York Counties Plot
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 median_tibble =
   payroll_data %>%
   group_by(county_name) %>%
   summarise(median_total_other_pay = median(total_other_pay))
-
+ 
 median_other_pay_plot =
   payroll_data %>%
   left_join(median_tibble, by = "county_name") %>%
@@ -492,14 +493,14 @@ median_other_pay_plot =
     fill = "New York State County Names"
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 0.5)) 
-
+ 
 median_other_pay_plot
 ```
-
-An exploratory analysis was performed to understand the median total other pay for municipal employees throughout New York State by county in 2022 through a boxplot (Figure 12).  Figure 12 demonstrates that New York county has the lowest median for total other pay, which is relatively close to 0 dollars, while Schoharie county has the highest median for total other pay, which is relatively above 5000 dollars for municipal workers.  We did not expect New York county to have the lowest median for total other pay, but instead be one of the counties with the highest median for total other pay due to the large population and number of job titles within this county (Figure 2).  All of the other counties have relatively similar medians for total other pay in 2022.  It is also important to note that New York county has the greatest number of outliers, which may be due to the large population within this county.  Based on figure 7, Queens, Bronx, and Kings counties also have high numbers of outliers, which may also be due to the large populations within these counties.  There are counties that do not have any outliers, such as Sullivan, Delaware, Greene, and Orange counties.  This figure also illustrates that there are employees in some of the counties that have negative values for other types of pay, which can include lump sums, meal allowance, settlement amounts, differentials, uniform allowance, retroactive pay increases, and bonus pay.  These other forms of payment would explain why there are negative values for this variable.
-
+ 
+An exploratory analysis was performed to understand the median total other pay for municipal employees throughout New York State by county in 2022 through a boxplot (Figure 12).  Figure 12 demonstrates that New York county has the lowest median for total other pay, which is relatively close to 0 dollars, while Schoharie county has the highest median for total other pay, which is relatively above 5000 dollars for municipal workers.  We did not expect New York county to have the lowest median for total other pay, but instead be one of the counties with the highest median for total other pay due to the large population and number of job titles within this county (Figure 2).  All of the other counties have relatively similar medians for total other pay in 2022.  It is also important to note that New York county has the greatest number of outliers, which may be due to the large population within this county.  Based on figure 12, Queens, Bronx, and Kings counties also have high numbers of outliers, which may also be due to the large populations within these counties.  There are counties that do not have any outliers, such as Sullivan, Delaware, Greene, and Orange counties.  This figure also illustrates that there are employees in some of the counties that have negative values for other types of pay, which can include lump sums, meal allowance, settlement amounts, differentials, uniform allowance, retroactive pay increases, and bonus pay.  These other forms of payment would explain why there are negative values for this variable.
+ 
 ### Bar Graph for the Number of Municipal Employees by Leave Status in New York State Plot
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 Ls_bar = 
   payroll_data %>%
@@ -507,7 +508,7 @@ Ls_bar =
   summarise(
     count = n()
     )
-
+ 
 ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
 geom_bar(position = "dodge", stat = "identity") + 
 labs(
@@ -518,29 +519,29 @@ labs(
     ) + 
 scale_y_continuous(labels = scales::comma)
 ```
-
-We also performed a bar graph to show the distribution of leave status. In 2022, there were a total of 594,234 municipal employees across New York state counties.  The graph shows that 481,781 municipal employees had a leave status of active and 102,360 employees had a leave status of ceased.  The remaining number of municipal employees, 10,093, were on leave. 
-
-
+ 
+We also created a bar graph to show the distribution of leave status. In 2022, there were a total of 594,234 municipal employees across New York state counties.  The graph shows that 481,781 municipal employees had a leave status that was active and 102,360 employees had a leave status that was ceased.  The remaining number of municipal employees, 10,093, were on leave. 
+ 
+ 
 ### Pie Chart for Percentages of Municipal Employees by Leave Status Across All Counties Plot
-
+ 
 ```{r, message = FALSE, warning=FALSE}
 Total_ls = table(pull(payroll_data,leave_status))
-
+ 
 Total_ls
-
+ 
 labels = c("Active", "Ceased", "On Leave")
-
+ 
 piepercent = round(100 * Total_ls / sum(Total_ls), 1)
-
+ 
 par(xpd = TRUE) 
-
+ 
 pie(Total_ls, labels = paste(labels, sep = " ", piepercent, "%"),
     main = "Figure 14. Percentages of Municipal Employees by Leave Status Across All Counties", col =       viridis(length(Total_ls)))
 legend("topright", c("Active", "Ceased", "On Leave"),cex = 1.1, fill = viridis(length(Total_ls)))
 ```
+We also wanted to look at the leave status to know how many municipal employees were actively working, had stopped working or were on leave.  We constructed a pie chart which shows the percentages of leave status for all municipal employees in New York State in 2022.   We assumed that the majority of the municipal employees across all New York state counties  would have a leave status that was active. 81.1% of the municipal employees were actively working, which was to be expected.  17.2 % of employees have stopped working at their municipal jobs and 1.7% of municipal employees were on leave. 
 
-We constructed a pie chart which shows the percentages of leave status for all municipal employees in 2022. We assumed that the majority of the municipal employees across all New York state counties would have a leave status of active. 81.1 % of the municipal employees were actively working which was to be expected.  17.2 % of employees have stopped working at their municipal jobs and 1.7 municipal employees were on leave. 
 
 
 ## Additional Analysis

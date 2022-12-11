@@ -117,16 +117,14 @@ top5_freq_n =
      job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
      job_title = recode(job_title, "ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE" = "ASSISTANT DIRECTOR OF INTERNATIONAL RELATIONS"),
      job_title = recode(job_title, "EMERGENCY MEDICAL SPECIALIST-EMT" = "EMT"))
- 
-top_plot = 
-  ggplot(top5_freq_n, aes(x = reorder(job_title, number_of_people), y = number_of_people)) + geom_point(aes(color = county_name), alpha = 0.5) + 
-scale_y_continuous(
-  labels = scales::comma,
-  limits = c(0,120000),
-  breaks = seq(0, 120000, by = 15000)) + 
-labs(title = "Top Five Job Titles in Six New York State Counties",x = "Job Title", y = "Number of Employees")  + 
-  guides(color = guide_legend(title = "New York State County Names")) +
-theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+top_plot =
+    top5_freq_n %>%
+    plot_ly(x = ~ reorder(job_title, number_of_people), y = ~ number_of_people, color = ~county_name,  type = "scatter", mode = "markers", colors = "viridis")     
+    
+top_plot |> layout(
+    yaxis = list(title = "Number of Employees"),title = "Top Five Job Titles in Six New York State Counties",x = "Job Title", y = "Number of Employees",
+    xaxis = list(title = "New York State County Names"))
 
 top_plot
 ```
