@@ -1,5 +1,5 @@
 ---
-title: "Base Salary by Pay Base"
+title: "Base Salary by Pay Bases"
 output: 
   html_document:
     code_folding: hide
@@ -37,58 +37,9 @@ payroll_data =
     read_csv("data/payroll_data.csv")
 ```
 
-```{r}
-number_job_titles_plot =
-  payroll_data %>%
-  group_by(county_name, job_title) %>%
-  summarise(count = n()) %>%
-  ungroup() %>% 
-  group_by(county_name) %>%
-  summarise(count = n()) %>%
-        ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = "dodge", stat = "identity") +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1500),
-    breaks = seq(0, 1500, by = 250)) +
-  labs(
-    x = "County Names",
-    y = "Number of Job Titles",
-    title = "The Number of Job Titles Held By Municipal Employees of New York State By County",
-    fill = "New York State County Names"
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-number_job_titles_plot
-```
 
 
-```{r}
-Ls_bar = payroll_data %>%
-  group_by(leave_status) %>%
-  summarise(
-    count = n())
-
-ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + geom_bar(position = "dodge", stat = "identity") + labs(title = "The Number of Employees by Municipality Separated  by Leave Status", x = "Leave Status", y = "Number of Employees") + scale_y_continuous(labels = scales::comma)
-```
-
-```{r}
-Total_ls = table(pull(payroll_data,leave_status))
-
-Total_ls
-
-
-labels = c("Active", "Ceased", "On Leave")
-
-piepercent = round(100 * Total_ls / sum(Total_ls), 1)
-
-par(xpd = TRUE) 
-pie(Total_ls, labels = paste(labels, sep = " ", piepercent, "%"),
-    main = "Percentages of Municipal Employees by Leave Status", col = viridis(length(Total_ls)))
-legend("topright", c("Active", "Ceased", "On Leave"),cex = 0.9, fill = viridis(length(Total_ls)))
-```
-
-# Total Number of Job Titles by New York State Counties Plot
+### Total Number of Job Titles by New York State Counties
 
 ```{r}
 number_job_titles_plot =
@@ -102,12 +53,40 @@ number_job_titles_plot =
   geom_bar(position = "dodge", stat = "identity") +
   scale_y_continuous(
       labels = scales::comma,
-    limits = c(0, 1500),
-    breaks = seq(0, 1500, by = 250)) +
+    limits = c(0, 1375),
+    breaks = seq(0, 1375, by = 275)) +
   labs(
     x = "County Names",
     y = "Number of Job Titles",
-    title = "The Number of Job Titles Held By Municipal Employees of New York State By County",
+    title = "The Number of Job Titles Held By Municipal Employees in New York State By County",
+    fill = "New York State County Names"
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+number_job_titles_plot
+```
+
+
+### Total Number of Job Titles by New York State Counties
+
+```{r}
+number_job_titles_plot =
+  payroll_data %>%
+  group_by(county_name, job_title) %>%
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(county_name) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 1375),
+    breaks = seq(0, 1375, by = 275)) +
+  labs(
+    x = "County Names",
+    y = "Number of Job Titles",
+    title = "The Number of Job Titles Held By Municipal Employees in New York State By County",
     fill = "New York State County Names"
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
@@ -145,8 +124,8 @@ job_frequency_plot =
     limits = c(0, 120000),
     breaks = seq(0, 120000, by = 10000)) +
   labs(
-    x = "Top 10 Job Titles",
-    y = "Frequency of Job Titles",
+    x = "Job Titles",
+    y = "Number of Municipal Employees",
     title = "The Top 10 Job Titles Held By Municipal Employees Throughout the Counties in New York State",
     fill = "New York State County Names"
   ) +
@@ -155,7 +134,7 @@ job_frequency_plot =
 job_frequency_plot
 ```
 
-# The Top Five Job Titles Held by Municipal Employees in Six New York State Counties Plot
+### The Top Five Job Titles Held by Municipal Employees in Six New York State Counties
 
 ```{r}
 top5_freq = 
@@ -189,7 +168,8 @@ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 top_plot
 ```
 
-# Plot for Top 10 Job Titles Throughout the New York County
+
+### Plot for Top 10 Job Titles Throughout New York County
 
 ```{r}
 job_frequency_newyork =
@@ -213,24 +193,22 @@ job_frequency_newyork_data =
     
 job_frequency_newyork_plot =
     job_frequency_newyork_data %>%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = "dodge", stat = "identity") + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 10000)) +
+    breaks = seq(0, 120000, by = 20000)) +
   labs(
-    x = "Top 10 Job Titles",
-    y = "Frequency of Job Titles",
-    title = "The Top 10 Job Titles Held By Municipal Employees in New York County",
-    fill = "New York State County Names"
-  ) +
+    x = "Job Titles",
+    y = "Number of Municipal Employees",
+    title = "The Top 10 Job Titles Held By Municipal Employees in New York County") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_newyork_plot
 ```
 
-# Plot for Top 10 Job Titles Throughout Albany County
+### Plot for Top 10 Job Titles Throughout Albany County
 
 ```{r}
 job_frequency_albany =
@@ -245,28 +223,61 @@ job_frequency_albany_data =
     job_frequency_albany %>%
     top_n(job_frequency, n = 10) %>%
     mutate(
-     job_title = recode(job_title, "TEACHER- PER SESSION" = "TEACHER PER SESSION"),
-     job_title = recode(job_title, "ANNUAL ED PARA" = "EDUCATION PARAPROFESSIONAL"),
-     job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
-     job_title = recode(job_title, "TEACHER-GENERAL ED" = "GENERAL EDUCATION TEACHER"),
-     job_title = recode(job_title, "SUBSTITUTE ED PARA" = "SUBSTITUTE EDUCATION PARAPROFESSIONAL"),
-     job_title = recode(job_title, "F/T SCHOOL AIDE" = "SCHOOL AIDE"))
+     job_title = recode(job_title, "ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE" = "ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS"))
     
 job_frequency_albany_plot =
     job_frequency_albany_data %>%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = "dodge", stat = "identity") + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 5),
     breaks = seq(0, 5, by = 1)) +
   labs(
-    x = "Top 10 Job Titles",
-    y = "Frequency of Job Titles",
-    title = "The Top 10 Job Titles Held By Municipal Employeesin Albany County",
-    fill = "New York State County Names"
-  ) +
+    x = "Job Titles",
+    y = "Number of Municipal Employees",
+    title = "The 6 Job Titles Held By Municipal Employees In Albany County") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_albany_plot
+```
+
+### Bar Graph for the Number of Municipal Employees by Leave Status in New York State
+
+```{r}
+Ls_bar = 
+  payroll_data %>%
+  group_by(leave_status) %>%
+  summarise(
+    count = n()
+    )
+
+ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
+geom_bar(position = "dodge", stat = "identity") + 
+labs(
+    title = "The Number of Municipal Employees by Leave Status in New York State",
+    x = "Leave Status", 
+    y = "Number of Municipal Employees", 
+    fill = "Leave Status" 
+    ) + 
+scale_y_continuous(labels = scales::comma)
+```
+
+
+### Pie Chart for Percentages of Municipal Employees by Leave Status Across All Counties
+
+```{r}
+Total_ls = table(pull(payroll_data,leave_status))
+
+Total_ls
+
+labels = c("Active", "Ceased", "On Leave")
+
+piepercent = round(100 * Total_ls / sum(Total_ls), 1)
+
+par(xpd = TRUE) 
+
+pie(Total_ls, labels = paste(labels, sep = " ", piepercent, "%"),
+    main = "Percentages of Municipal Employees by Leave Status Across All Counties", col =       viridis(length(Total_ls)))
+legend("topright", c("Active", "Ceased", "On Leave"),cex = 1.1, fill = viridis(length(Total_ls)))
 ```

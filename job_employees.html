@@ -11,7 +11,7 @@
 
 
 
-<title>Base Salary by Pay Base</title>
+<title>Base Salary by Pay Bases</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -336,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Explotory Analyses
+    Exploratory Analyses
      
     <span class="caret"></span>
   </a>
@@ -362,9 +362,6 @@ div.tocify {
     <li>
       <a href="stat.html">Statistical Tests</a>
     </li>
-    <li>
-      <a href="payroll_association.html">Payroll association with county</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -373,6 +370,12 @@ div.tocify {
 <li>
   <a href="mailto:&lt;you@youremail.com&gt;">
     <span class="fa fa-play-circle-o"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="references.html">
+    <span class=" References"></span>
      
   </a>
 </li>
@@ -399,7 +402,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Base Salary by Pay Base</h1>
+<h1 class="title toc-ignore">Base Salary by Pay Bases</h1>
 
 </div>
 
@@ -426,62 +429,16 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ─────────────────────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>number_job_titles_plot =
-  payroll_data %&gt;%
-  group_by(county_name, job_title) %&gt;%
-  summarise(count = n()) %&gt;%
-  ungroup() %&gt;% 
-  group_by(county_name) %&gt;%
-  summarise(count = n()) %&gt;%
-        ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1500),
-    breaks = seq(0, 1500, by = 250)) +
-  labs(
-    x = &quot;County Names&quot;,
-    y = &quot;Number of Job Titles&quot;,
-    title = &quot;The Number of Job Titles Held By Municipal Employees of New York State By County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
-<pre class="r"><code>number_job_titles_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
-<pre class="r"><code>Ls_bar = payroll_data %&gt;%
-  group_by(leave_status) %&gt;%
-  summarise(
-    count = n())
-
-ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + labs(title = &quot;The Number of Employees by Municipality Separated  by Leave Status&quot;, x = &quot;Leave Status&quot;, y = &quot;Number of Employees&quot;) + scale_y_continuous(labels = scales::comma)</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
-<pre class="r"><code>Total_ls = table(pull(payroll_data,leave_status))
-
-Total_ls</code></pre>
-<pre><code>## 
-##   ACTIVE   CEASED ON LEAVE 
-##   481781   102360    10093</code></pre>
-<pre class="r"><code>labels = c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;)
-
-piepercent = round(100 * Total_ls / sum(Total_ls), 1)
-
-par(xpd = TRUE) 
-pie(Total_ls, labels = paste(labels, sep = &quot; &quot;, piepercent, &quot;%&quot;),
-    main = &quot;Percentages of Municipal Employees by Leave Status&quot;, col = viridis(length(Total_ls)))
-legend(&quot;topright&quot;, c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;),cex = 0.9, fill = viridis(length(Total_ls)))</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
-<div id="total-number-of-job-titles-by-new-york-state-counties-plot"
-class="section level1">
-<h1>Total Number of Job Titles by New York State Counties Plot</h1>
+<div id="total-number-of-job-titles-by-new-york-state-counties"
+class="section level3">
+<h3>Total Number of Job Titles by New York State Counties</h3>
 <pre class="r"><code>number_job_titles_plot =
   payroll_data %&gt;%
   group_by(county_name, job_title) %&gt;%
@@ -493,19 +450,47 @@ class="section level1">
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
   scale_y_continuous(
       labels = scales::comma,
-    limits = c(0, 1500),
-    breaks = seq(0, 1500, by = 250)) +
+    limits = c(0, 1375),
+    breaks = seq(0, 1375, by = 275)) +
   labs(
     x = &quot;County Names&quot;,
     y = &quot;Number of Job Titles&quot;,
-    title = &quot;The Number of Job Titles Held By Municipal Employees of New York State By County&quot;,
+    title = &quot;The Number of Job Titles Held By Municipal Employees in New York State By County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>number_job_titles_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+</div>
+<div id="total-number-of-job-titles-by-new-york-state-counties-1"
+class="section level3">
+<h3>Total Number of Job Titles by New York State Counties</h3>
+<pre class="r"><code>number_job_titles_plot =
+  payroll_data %&gt;%
+  group_by(county_name, job_title) %&gt;%
+  summarise(count = n()) %&gt;%
+  ungroup() %&gt;% 
+  group_by(county_name) %&gt;%
+  summarise(count = n()) %&gt;%
+  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+  scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 1375),
+    breaks = seq(0, 1375, by = 275)) +
+  labs(
+    x = &quot;County Names&quot;,
+    y = &quot;Number of Job Titles&quot;,
+    title = &quot;The Number of Job Titles Held By Municipal Employees in New York State By County&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>number_job_titles_plot</code></pre>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
 </div>
 <div
 id="plot-for-top-10-job-titles-throughout-the-new-york-state-counties"
@@ -518,8 +503,8 @@ payroll_data %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
     ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>job_frequency_data = 
     job_frequency %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
@@ -540,21 +525,20 @@ job_frequency_plot =
     limits = c(0, 120000),
     breaks = seq(0, 120000, by = 10000)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
     title = &quot;The Top 10 Job Titles Held By Municipal Employees Throughout the Counties in New York State&quot;,
     fill = &quot;New York State County Names&quot;
   ) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
-</div>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
 <div
-id="the-top-five-job-titles-held-by-municipal-employees-in-six-new-york-state-counties-plot"
-class="section level1">
-<h1>The Top Five Job Titles Held by Municipal Employees in Six New York
-State Counties Plot</h1>
+id="the-top-five-job-titles-held-by-municipal-employees-in-six-new-york-state-counties"
+class="section level3">
+<h3>The Top Five Job Titles Held by Municipal Employees in Six New York
+State Counties</h3>
 <pre class="r"><code>top5_freq = 
   payroll_data %&gt;%
    filter(county_name %in% c(&quot;NEW YORK&quot;, &quot;KINGS&quot;, &quot;BRONX&quot;, &quot;QUEENS&quot;, &quot;RICHMOND&quot;,&quot;ALBANY&quot;)) %&gt;%
@@ -562,8 +546,8 @@ State Counties Plot</h1>
    summarise(number_of_people = n()) %&gt;%
    arrange(desc(number_of_people)) %&gt;%
    slice(1:5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>top5_freq_n = 
   top5_freq %&gt;%
    mutate(
@@ -585,11 +569,11 @@ labs(title = &quot;The Top Five Job Titles Held by Municipal Employees in Six Ne
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 top_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
 </div>
-<div id="plot-for-top-10-job-titles-throughout-the-new-york-county"
-class="section level1">
-<h1>Plot for Top 10 Job Titles Throughout the New York County</h1>
+<div id="plot-for-top-10-job-titles-throughout-new-york-county"
+class="section level3">
+<h3>Plot for Top 10 Job Titles Throughout New York County</h3>
 <pre class="r"><code>job_frequency_newyork =
 payroll_data %&gt;%
     filter(county_name == &quot;NEW YORK&quot;) |&gt; 
@@ -597,8 +581,8 @@ payroll_data %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
     ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>job_frequency_newyork_data = 
     job_frequency_newyork %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
@@ -612,26 +596,24 @@ payroll_data %&gt;%
     
 job_frequency_newyork_plot =
     job_frequency_newyork_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 10000)) +
+    breaks = seq(0, 120000, by = 20000)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
-    title = &quot;The Top 10 Job Titles Held By Municipal Employees in New York County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) +
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
+    title = &quot;The Top 10 Job Titles Held By Municipal Employees in New York County&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_newyork_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
 </div>
 <div id="plot-for-top-10-job-titles-throughout-albany-county"
-class="section level1">
-<h1>Plot for Top 10 Job Titles Throughout Albany County</h1>
+class="section level3">
+<h3>Plot for Top 10 Job Titles Throughout Albany County</h3>
 <pre class="r"><code>job_frequency_albany =
 payroll_data %&gt;%
     filter(county_name == &quot;ALBANY&quot;) |&gt; 
@@ -639,37 +621,76 @@ payroll_data %&gt;%
     summarise(job_frequency = n()) %&gt;%
     arrange(desc(job_frequency)) %&gt;%
     ungroup()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>job_frequency_albany_data = 
     job_frequency_albany %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
-     job_title = recode(job_title, &quot;TEACHER- PER SESSION&quot; = &quot;TEACHER PER SESSION&quot;),
-     job_title = recode(job_title, &quot;ANNUAL ED PARA&quot; = &quot;EDUCATION PARAPROFESSIONAL&quot;),
-     job_title = recode(job_title, &quot;TEACHER SPECIAL EDUCATION&quot; = &quot;SPECIAL EDUCATION TEACHER&quot;),
-     job_title = recode(job_title, &quot;TEACHER-GENERAL ED&quot; = &quot;GENERAL EDUCATION TEACHER&quot;),
-     job_title = recode(job_title, &quot;SUBSTITUTE ED PARA&quot; = &quot;SUBSTITUTE EDUCATION PARAPROFESSIONAL&quot;),
-     job_title = recode(job_title, &quot;F/T SCHOOL AIDE&quot; = &quot;SCHOOL AIDE&quot;))
+     job_title = recode(job_title, &quot;ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE&quot; = &quot;ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS&quot;))
     
 job_frequency_albany_plot =
     job_frequency_albany_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 5),
     breaks = seq(0, 5, by = 1)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
-    title = &quot;The Top 10 Job Titles Held By Municipal Employeesin Albany County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) +
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
+    title = &quot;The 6 Job Titles Held By Municipal Employees In Albany County&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_albany_plot</code></pre>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+</div>
+<div
+id="bar-graph-for-the-number-of-municipal-employees-by-leave-status-in-new-york-state"
+class="section level3">
+<h3>Bar Graph for the Number of Municipal Employees by Leave Status in
+New York State</h3>
+<pre class="r"><code>Ls_bar = 
+  payroll_data %&gt;%
+  group_by(leave_status) %&gt;%
+  summarise(
+    count = n()
+    )
+
+ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
+geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+labs(
+    title = &quot;The Number of Municipal Employees by Leave Status in New York State&quot;,
+    x = &quot;Leave Status&quot;, 
+    y = &quot;Number of Municipal Employees&quot;, 
+    fill = &quot;Leave Status&quot; 
+    ) + 
+scale_y_continuous(labels = scales::comma)</code></pre>
+<p><img src="job_employees_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
+</div>
+<div
+id="pie-chart-for-percentages-of-municipal-employees-by-leave-status-across-all-counties"
+class="section level3">
+<h3>Pie Chart for Percentages of Municipal Employees by Leave Status
+Across All Counties</h3>
+<pre class="r"><code>Total_ls = table(pull(payroll_data,leave_status))
+
+Total_ls</code></pre>
+<pre><code>## 
+##   ACTIVE   CEASED ON LEAVE 
+##   481781   102360    10093</code></pre>
+<pre class="r"><code>labels = c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;)
+
+piepercent = round(100 * Total_ls / sum(Total_ls), 1)
+
+par(xpd = TRUE) 
+
+pie(Total_ls, labels = paste(labels, sep = &quot; &quot;, piepercent, &quot;%&quot;),
+    main = &quot;Percentages of Municipal Employees by Leave Status Across All Counties&quot;, col =       viridis(length(Total_ls)))
+legend(&quot;topright&quot;, c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;),cex = 1.1, fill = viridis(length(Total_ls)))</code></pre>
 <p><img src="job_employees_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
+</div>
 </div>
 
 

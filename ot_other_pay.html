@@ -336,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Explotory Analyses
+    Exploratory Analyses
      
     <span class="caret"></span>
   </a>
@@ -362,9 +362,6 @@ div.tocify {
     <li>
       <a href="stat.html">Statistical Tests</a>
     </li>
-    <li>
-      <a href="payroll_association.html">Payroll association with county</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -373,6 +370,12 @@ div.tocify {
 <li>
   <a href="mailto:&lt;you@youremail.com&gt;">
     <span class="fa fa-play-circle-o"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="references.html">
+    <span class=" References"></span>
      
   </a>
 </li>
@@ -426,21 +429,25 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ─────────────────────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div id="total-other-pay-by-new-york-counties-plot"
+class="section level3">
+<h3>Total Other Pay by New York Counties Plot</h3>
 <pre class="r"><code>median_tibble =
   payroll_data %&gt;%
   group_by(county_name) %&gt;%
   summarise(median_total_other_pay = median(total_other_pay))
+
 median_other_pay_plot =
   payroll_data %&gt;%
   left_join(median_tibble, by = &quot;county_name&quot;) %&gt;%
-        ggplot(aes(x = reorder(county_name, median_total_other_pay), y = total_other_pay, fill = county_name)) +
+  ggplot(aes(x = reorder(county_name, median_total_other_pay), y = total_other_pay, fill = county_name)) +
   geom_boxplot() +
     scale_y_continuous(
       labels = scales::comma,
@@ -448,37 +455,44 @@ median_other_pay_plot =
     breaks = seq(-20000, 40000, by = 10000)) +
   labs(
     x = &quot;County Names&quot;,
-    y = &quot;Median Total Other Types of Pay&quot;,
-    title = &quot;The Median Total Other Pay for Municipal Employees of New York State By County&quot;,
+    y = &quot;Total for Other Pay ($)&quot;,
+    title = &quot;The Total Other Pay for Municipal Employees of New York State By County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 0.5)) 
 
 median_other_pay_plot</code></pre>
 <p><img src="ot_other_pay_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
-<pre class="r"><code>overtime_tibble = payroll_data %&gt;% 
+</div>
+<div id="total-overtime-paid-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Total Overtime Paid By New York State Counties Plot</h3>
+<pre class="r"><code>overtime_tibble = 
+    payroll_data %&gt;% 
     group_by(county_name) %&gt;% 
     summarise(median_total_ot_paid = median(total_ot_paid))
-    
+
 median_ot_paid_plot = 
     payroll_data |&gt; 
     left_join(overtime_tibble, by = &quot;county_name&quot;) |&gt; 
-    ggplot(aes(x = reorder(county_name, median_total_ot_paid ), y = total_ot_paid, fill = county_name)) +
+    ggplot(aes(x = reorder(county_name, median_total_ot_paid), y = total_ot_paid,
+    fill = county_name)) +
     geom_boxplot() +
-     scale_y_continuous(
-      labels = scales::comma,
-    limits = c(-5000, 32500),
-    breaks = seq(-5000, 32500, by = 5000)) +
+    scale_y_continuous(
+    labels = scales::comma,
+    limits = c(-5000, 27500),
+    breaks = seq(-5000, 27500, by = 7500)) +
     labs(
     x = &quot;County Names&quot;,
-    y = &quot;Total Overtime Paid&quot;,
-    title = &quot;Total Overtime Paid By Each County&quot;,
+    y = &quot;Total Overtime Paid ($)&quot;,
+    title = &quot;Total Overtime Paid By Each County in New York State&quot;,
     fill = &quot;New York State County Names&quot;
-  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
+  ) + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 median_ot_paid_plot</code></pre>
 <p><img src="ot_other_pay_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+</div>
 
 
 

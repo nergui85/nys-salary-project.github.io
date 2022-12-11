@@ -36,13 +36,6 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
-<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -343,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Explotory Analyses
+    Exploratory Analyses
      
     <span class="caret"></span>
   </a>
@@ -417,15 +410,13 @@ div.tocify {
 <center>
 <img src="images/wall_street_workers.jpg" style="width:100%">
 </center>
-<div id="mean-base-salary-by-new-york-counties" class="section level3">
-<h3>Mean Base Salary By New York Counties</h3>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
 ## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
 ## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ───────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(janitor)</code></pre>
@@ -470,29 +461,47 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div id="mean-base-salary-by-new-york-state-counties-plot"
+class="section level2">
+<h2>Mean Base Salary By New York State Counties Plot</h2>
+<p>Exploratory analysis for our primary outcome of whether there is a
+significant difference in the mean base salary of employees in New York
+State by county in 2022.</p>
 <pre class="r"><code>mean_base_salary_plot =
   payroll_data %&gt;%
   group_by(county_name) %&gt;%
   summarize(
-      mean_base_salary = mean(base_salary, na.rm = TRUE)) %&gt;%
-        plot_ly(x = ~ reorder(county_name, mean_base_salary), y = ~ mean_base_salary, color = ~county_name,  type = &quot;bar&quot;, colors = &quot;viridis&quot;)  
+  mean_base_salary = mean(base_salary, na.rm = TRUE)) %&gt;%
+  ggplot(aes(x = reorder(county_name, mean_base_salary), y = mean_base_salary, fill = county_name)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
+  scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 110000),
+    breaks = seq(0, 110000, by = 27500)) +
+  labs(
+    x = &quot;County Names&quot;,
+    y = &quot;Mean Base Salary ($)&quot;,
+    title = &quot;The Average Base Salary for Municipal Employees of New York State By County&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + 
+  theme(axis.text.x = element_text(angle = 80, vjust = 0.5, hjust = 0.50)) 
 
-
-mean_base_salary_plot |&gt; layout(yaxis = list(title = &quot;Mean Base Salary&quot;),title = &quot;The Average Base Salary for Municipal Employees of New York State By County&quot;,
-                xaxis = list(title = &quot;County Names&quot;))</code></pre>
-<div id="htmlwidget-4359a01b2d3b633abfd9" style="width:90%;height:576px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4359a01b2d3b633abfd9">{"x":{"visdat":{"6fb139a0aaba":["function () ","plotlyVisDat"]},"cur_data":"6fb139a0aaba","attrs":{"6fb139a0aaba":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Base Salary"},"title":"The Average Base Salary for Municipal Employees of New York State By County","xaxis":{"domain":[0,1],"automargin":true,"title":"County Names","type":"category","categoryorder":"array","categoryarray":["NASSAU","NEW YORK","DUTCHESS","BRONX","GREENE","ORANGE","RICHMOND","QUEENS","KINGS","PUTNAM","DELAWARE","SCHOHARIE","WESTCHESTER","SULLIVAN","ULSTER","ALBANY"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["ALBANY"],"y":[104555.301538462],"type":"bar","name":"ALBANY","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["BRONX"],"y":[57761.628897458],"type":"bar","name":"BRONX","marker":{"color":"rgba(72,26,108,1)","line":{"color":"rgba(72,26,108,1)"}},"textfont":{"color":"rgba(72,26,108,1)"},"error_y":{"color":"rgba(72,26,108,1)"},"error_x":{"color":"rgba(72,26,108,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["DELAWARE"],"y":[67526.5163414634],"type":"bar","name":"DELAWARE","marker":{"color":"rgba(71,47,125,1)","line":{"color":"rgba(71,47,125,1)"}},"textfont":{"color":"rgba(71,47,125,1)"},"error_y":{"color":"rgba(71,47,125,1)"},"error_x":{"color":"rgba(71,47,125,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["DUTCHESS"],"y":[57759.7223333333],"type":"bar","name":"DUTCHESS","marker":{"color":"rgba(65,68,135,1)","line":{"color":"rgba(65,68,135,1)"}},"textfont":{"color":"rgba(65,68,135,1)"},"error_y":{"color":"rgba(65,68,135,1)"},"error_x":{"color":"rgba(65,68,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["GREENE"],"y":[59582.792],"type":"bar","name":"GREENE","marker":{"color":"rgba(57,86,140,1)","line":{"color":"rgba(57,86,140,1)"}},"textfont":{"color":"rgba(57,86,140,1)"},"error_y":{"color":"rgba(57,86,140,1)"},"error_x":{"color":"rgba(57,86,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["KINGS"],"y":[62639.2342540392],"type":"bar","name":"KINGS","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"textfont":{"color":"rgba(49,104,142,1)"},"error_y":{"color":"rgba(49,104,142,1)"},"error_x":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["NASSAU"],"y":[33390.8795121951],"type":"bar","name":"NASSAU","marker":{"color":"rgba(42,120,142,1)","line":{"color":"rgba(42,120,142,1)"}},"textfont":{"color":"rgba(42,120,142,1)"},"error_y":{"color":"rgba(42,120,142,1)"},"error_x":{"color":"rgba(42,120,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["NEW YORK"],"y":[42830.7116725727],"type":"bar","name":"NEW YORK","marker":{"color":"rgba(35,136,142,1)","line":{"color":"rgba(35,136,142,1)"}},"textfont":{"color":"rgba(35,136,142,1)"},"error_y":{"color":"rgba(35,136,142,1)"},"error_x":{"color":"rgba(35,136,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ORANGE"],"y":[60103],"type":"bar","name":"ORANGE","marker":{"color":"rgba(31,152,139,1)","line":{"color":"rgba(31,152,139,1)"}},"textfont":{"color":"rgba(31,152,139,1)"},"error_y":{"color":"rgba(31,152,139,1)"},"error_x":{"color":"rgba(31,152,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["PUTNAM"],"y":[63990.3678571429],"type":"bar","name":"PUTNAM","marker":{"color":"rgba(34,168,132,1)","line":{"color":"rgba(34,168,132,1)"}},"textfont":{"color":"rgba(34,168,132,1)"},"error_y":{"color":"rgba(34,168,132,1)"},"error_x":{"color":"rgba(34,168,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["QUEENS"],"y":[61691.259764459],"type":"bar","name":"QUEENS","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"textfont":{"color":"rgba(53,183,121,1)"},"error_y":{"color":"rgba(53,183,121,1)"},"error_x":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["RICHMOND"],"y":[60632.5404783599],"type":"bar","name":"RICHMOND","marker":{"color":"rgba(84,197,104,1)","line":{"color":"rgba(84,197,104,1)"}},"textfont":{"color":"rgba(84,197,104,1)"},"error_y":{"color":"rgba(84,197,104,1)"},"error_x":{"color":"rgba(84,197,104,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SCHOHARIE"],"y":[69430.2665517241],"type":"bar","name":"SCHOHARIE","marker":{"color":"rgba(122,209,81,1)","line":{"color":"rgba(122,209,81,1)"}},"textfont":{"color":"rgba(122,209,81,1)"},"error_y":{"color":"rgba(122,209,81,1)"},"error_x":{"color":"rgba(122,209,81,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SULLIVAN"],"y":[73313.480390625],"type":"bar","name":"SULLIVAN","marker":{"color":"rgba(165,219,54,1)","line":{"color":"rgba(165,219,54,1)"}},"textfont":{"color":"rgba(165,219,54,1)"},"error_y":{"color":"rgba(165,219,54,1)"},"error_x":{"color":"rgba(165,219,54,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ULSTER"],"y":[77192.0401796407],"type":"bar","name":"ULSTER","marker":{"color":"rgba(210,226,27,1)","line":{"color":"rgba(210,226,27,1)"}},"textfont":{"color":"rgba(210,226,27,1)"},"error_y":{"color":"rgba(210,226,27,1)"},"error_x":{"color":"rgba(210,226,27,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WESTCHESTER"],"y":[70692.0269087523],"type":"bar","name":"WESTCHESTER","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<div id="base-salary" class="section level5 tabset">
-<h5 class="tabset">Base Salary</h5>
+mean_base_salary_plot</code></pre>
+<p><img src="base_salary_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+<div id="base-salary-by-bases" class="section level5 tabset">
+<h5 class="tabset">Base Salary By Bases</h5>
 <div id="base-salary-by-annually" class="section level6">
 <h6>Base Salary by Annually</h6>
+<p>Boxplots was created to illustrate the differences in the median base
+salary by annually for all New York state counties.</p>
+<p>Base Salary By Annual Pay Basis By New York State Counties Plot</p>
 <pre class="r"><code>pay_basis_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Annually&quot;) |&gt; 
@@ -509,11 +518,11 @@ Median_base_salary_plot_annually =
     scale_y_continuous(
       labels = scales::comma,
     limits = c(20000, 150000),
-    breaks = seq(20000, 150000, by = 10000)) +
+    breaks = seq(20000, 150000, by = 15000)) +
     labs(
     x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Annual Median Base Salary For Each County&quot;, 
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Base Salary For Annually-Paid Municipal Employees For Each New York State County&quot;, 
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
@@ -522,6 +531,8 @@ Median_base_salary_plot_annually</code></pre>
 </div>
 <div id="base-salary-by-daily" class="section level6">
 <h6>Base Salary by Daily</h6>
+<p>Boxplots was created to illustrate the differences in the median base
+salary by daily for all New York state counties.</p>
 <pre class="r"><code>pay_basis_daily_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Daily&quot;) |&gt; 
@@ -537,12 +548,12 @@ Median_base_salary_plot_daily =
     geom_boxplot() +
     scale_y_continuous(
       labels = scales::comma,
-    limits = c(0,625),
-    breaks = seq(0, 625, by = 50)) +
+    limits = c(0,650),
+    breaks = seq(0, 650, by = 50)) +
     labs(
     x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Daily Median Base Salary For Each County&quot;, 
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Base Salary For Daily-Paid Municipal Employees For Each New York State County&quot;, 
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
@@ -551,13 +562,15 @@ Median_base_salary_plot_daily</code></pre>
 </div>
 <div id="base-salary-by-hourly" class="section level6">
 <h6>Base Salary by Hourly</h6>
-<pre class="r"><code>pay_basis_hourly_tibble= 
+<p>Boxplots was created to illustrate the differences in the median base
+salary by hourly for all New York state counties.</p>
+<pre class="r"><code>pay_basis_hourly_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Hourly&quot;) |&gt; 
     group_by(county_name) %&gt;%
     summarise(median_base_salary_hourly = median(base_salary))
 
-Median_base_salary_plot_hourly =
+median_base_salary_plot_hourly =
     payroll_data %&gt;%
     filter(pay_basis == &quot;Hourly&quot;) |&gt; 
     left_join(pay_basis_hourly_tibble,  by = &quot;county_name&quot;) %&gt;%
@@ -570,40 +583,44 @@ Median_base_salary_plot_hourly =
     breaks = seq(0,95, by = 10)) +
     labs(
     x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Hourly Median Base Salary For Each County&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Base Salary For Hourly-Paid Municipal Employees For Each New York State County&quot;,
      fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
-Median_base_salary_plot_hourly</code></pre>
+median_base_salary_plot_hourly</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
 </div>
 <div id="base-salary-by-prorated" class="section level6">
 <h6>Base Salary by Prorated</h6>
+<p>Boxplots was created to illustrate the differences in the median base
+salary based on prorated for all New York state counties.</p>
 <pre class="r"><code>pay_basis_prorated_tibble = 
     payroll_data %&gt;%
     filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
     group_by(county_name) %&gt;%
     summarise(median_base_salary_prorated = median(base_salary))  
     
-Median_base_salary_plot_prorated =
+median_base_salary_plot_prorated =
     payroll_data %&gt;%
-    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
+    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt;
     left_join(pay_basis_prorated_tibble,  by = &quot;county_name&quot;) %&gt;%   
-    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), y = base_salary, fill = county_name)) +
+    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), 
+               y = base_salary, fill = county_name)) +
     geom_boxplot() +
     scale_y_continuous(
       labels = scales::comma,
-    limits = c(5000,85000),
-    breaks = seq(5000, 85000, by = 10000)) +
+    limits = c(10000,80000),
+    breaks = seq(10000, 80000, by = 10000)) +
     labs(
     x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Prorated Annual Median Base Salary For Each County&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Base Salary For Prorated-Annually-Paid Municipal Employees For Each New York State County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
-Median_base_salary_plot_prorated</code></pre>
+
+median_base_salary_plot_prorated</code></pre>
 <p><img src="base_salary_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
 </div>
 </div>

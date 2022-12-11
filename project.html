@@ -336,7 +336,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Explotory Analyses
+    Exploratory Analyses
      
     <span class="caret"></span>
   </a>
@@ -407,40 +407,11 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(janitor)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;janitor&#39;
-## 
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
-<pre class="r"><code>library(viridis)</code></pre>
-<pre><code>## Loading required package: viridisLite</code></pre>
-<pre class="r"><code>library(plotly)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plotly&#39;
-## 
-## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     last_plot
-## 
-## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter
-## 
-## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     layout</code></pre>
-<pre class="r"><code>library(ggplot2)
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
 knitr::opts_chunk$set(
     echo = TRUE,
     warning = FALSE,
@@ -458,7 +429,7 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <pre class="r"><code>payroll_data = 
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 594234 Columns: 10
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
 ## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
@@ -471,7 +442,7 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <p>New York City (NYC) is recognized as having the largest city and
 regional economies in the United States (Wikipedia, 2022). If New York
 City were an individual country, it would be ranked as the 10th largest
-global economy (Wikipedia, 2022). Our motivation for this project is to
+global economy.(Wikipedia, 2022). Our motivation for this project is to
 use the skills that we have learned in Data Science I and apply them to
 answer imperative questions about NYC, such as which NYC borough yields
 the highest and lowest average total pay, which would combine salary,
@@ -482,12 +453,12 @@ hit and the prospects of a recession began stirring fears of what the
 next couple of years will hold.Cities are more cautious about spending
 its budget compared to the previous years in response to COVID -19. As a
 result, many states and municipalities have made cuts, frozen spending
-and hiring, laid off workers and cut down the funds. Our project is to
-provide a visualization on how the City’s budget is being spent on
-salary and for the interest of the public as well as for those recent
-graduates looking for opportunities in City jobs, New York by conducting
-statistical analysis to evaluate the significant differences in base
-salary counties.</p>
+and hiring, laid off workers and cut down the funds. Our project will
+show is to provide a visualization on how the City’s budget is being
+spent on salary and for the interest of the public as well as for those
+recent graduates looking for opportunities in City jobs, New York by
+conducting statistical analysis to evaluate the significant differences
+in base salary between New York State Counties.</p>
 <p> </p>
 </div>
 <div id="related-work" class="section level2">
@@ -523,51 +494,67 @@ the FPL. Apparently this pattern has persisted throughout the years. It
 has proven in our data that the average base salary for municipal
 employees of New York county was among one of the lowest.</p>
 </div>
-<div id="questions-and-planned-analyses" class="section level2">
-<h2>Questions and Planned Analyses</h2>
+<div id="initial-questions" class="section level2">
+<h2>Initial Questions</h2>
 <ol style="list-style-type: decimal">
-<li>Which borough had the most violations? Which borough paid the most
-in fines?</li>
-<li>What did the distribution of violations look like over other
-variables in the dataset borough, date, vehicle type?</li>
-<li>Were the number of parking violations related to fire hydrants the
-same across the five boroughs? Can we find the hydrants that seem to be
-ticketed the most commonly?</li>
+<li>How many municipal employees in New York State were active, have
+stopped working, and were on leave?</li>
+<li>Which New York counties had a high base mean salary?</li>
+<li>Did any of the New York counties have a high median and upper
+quartile?</li>
+<li>Was there any New York county who gave more overtime pay to their
+municipal employees?</li>
+<li>Were there any differences in the median base salary among the
+counties?</li>
+<li>Which county had the highest median base salary, annually, daily,
+hourly, and prorated? 7.. Were there any significance in the difference
+of mean of base salary across all counties?</li>
+<li>Is there any significance in the difference of mean of base salary
+between certain counties?</li>
+</ol>
+<p>During the course of our project, we decided to look at the job title
+variable. The new questions that we considered were:</p>
+<ol start="9" style="list-style-type: decimal">
+<li>What were the top 10 job titles throughout the New York State
+counties?</li>
+<li>What were the top 5 job titles in Kings county, Albany county, New
+York county, Richmond county, and Queens county?</li>
+<li>What were the top 10 jobs in New York County?</li>
+<li>Which job title had the highest frequency in Albany county?</li>
 </ol>
 <p> </p>
 </div>
-<div id="data-processing-and-cleaning" class="section level2">
-<h2>Data Processing and Cleaning</h2>
-<ol style="list-style-type: lower-alpha">
-<li><p>The data that was used for this project is from a NYC Open Data
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The data that was used for this project is from a NYC Open Data
 webpage (hyperlink this) entitled “Citywide Payroll Data (Fiscal Year)”.
 It was collected with the purpose of understanding how New York City’s
 budget is utilized on salary and overtime pay for all municipal
 employees. However, it is important to note that the data contains
 information pertaining to municipal employees throughout various
 counties in New York State. This source of data is updated annually and
-was last updated on October 28, 2022. The raw data consisted of
-5,109,775 rows and 17 columns, which were fiscal year, payroll number,
-the name of the agency, last name of the employee, first name of the
-employee, middle initial of the employee, the date that the employee
-started working for the agency, the borough of the employee’s primary
-work location, the civil service title description, the leave status of
-the employee at the end of the fiscal year on June 30th, the base salary
-of the employee, pay basis, the number of regular hours that the
-employee worked in the fiscal year, the amount paid to the employee for
-base salary during the fiscal year, overtime hours worked by the
-employee during the fiscal year, the total overtime pay that was paid to
-the employee in the fiscal year, and total other pay. The borough of the
-employee’s primary work location variable are counties throughout New
-York State instead of just being the five boroughs in New York City. The
-pay basis is whether is the employee was paid by hour, per diem, or
-annually. The total other pay variable is any financial compensation in
-addition to overtime pay and gross salary, which would include lump
-sums, meal allowance, settlement amounts, differentials, uniform
-allowance, retroactive pay increases, and bonus pay. This data does not
-show salary increases that are received during any one fiscal
-year.</p></li>
-<li><p>The data was read into R as a .csv file using the “read_csv”
+was last updated on October 28, 2022.</p>
+<p>The raw data consisted of 5,109,775 rows and 17 columns, which were
+fiscal year, payroll number, the name of the agency, last name of the
+employee, first name of the employee, middle initial of the employee,
+the date that the employee started working for the agency, the borough
+of the employee’s primary work location, the civil service title
+description, the leave status of the employee at the end of the fiscal
+year on June 30th, the base salary of the employee, pay basis, the
+number of regular hours that the employee worked in the fiscal year, the
+amount paid to the employee for base salary during the fiscal year,
+overtime hours worked by the employee during the fiscal year, the total
+overtime pay that was paid to the employee in the fiscal year, and total
+other pay. The borough of the employee’s primary work location variable
+are counties throughout New York State instead of just being the five
+boroughs in New York City. The pay basis is whether is the employee was
+paid by hour, per diem, or annually. The total other pay variable is any
+financial compensation in addition to overtime pay and gross salary,
+which would include lump sums, meal allowance, settlement amounts,
+differentials, uniform allowance, retroactive pay increases, and bonus
+pay. This data does not show salary increases that are received during
+any one fiscal year.</p>
+<p>The data was read into R as a .csv file using the “read_csv”
 function. All of the variable names were then changed to lowercase and
 an underscore was used between spaces by using the “clean_names”
 function. We then filtered the data to only include records from the
@@ -579,33 +566,28 @@ the “leave_status_as_of_june_30” variable, and removed records
 containing “NA” for the “title_description” variable. The
 “agency_start_date” variable, which is the date that the employee
 started at the agency, was separated into three variables, “month”,
-“day”, and “start_year”. The variables “leave_status_as_of_june_30”,
-“work_location_borough”, and “title_description” were duplicated and
-renamed into “leave_status”, “county_name”, and “job_title”,
-respectively. The records containing “per Annum”, “per Day”, and “per
-Hour” for the pay basis variable were recoded into “Annually”, “Daily”,
-and “Hourly”, respectively. The records containing “MANHATTAN” and
-“BROOKLYN” for the county name variable were recoded into “New York” and
-“Kings”, respectively. The variables of payroll number, first name of
-the employee, last name of the employee, middle initial of the employee,
-month of the employee’s start date, day of the employee’s start date,
-the duplicated “leave_status_as_of_june_30”, the duplicated
-“work_location_borough”, the number of regular hours that the employee
-worked in the fiscal year, the amount paid to the employee for base
-salary during the fiscal year, and the overtime hours worked by the
+“day”, and “start_year”. The variables “leave_status_as_of_june_30” and
+“work_location_borough” were duplicated and renamed into “leave_status”
+and “county_name”, respectively. The records containing “per Annum”,
+“per Day”, and “per Hour” for the pay basis variable were recoded into
+“Annually”, “Daily”, and “Hourly”, respectively. The records containing
+“MANHATTAN” and “BROOKLYN” for the county name variable were recoded
+into “New York” and “Kings”, respectively. The variables of payroll
+number, first name of the employee, last name of the employee, middle
+initial of the employee, month of the employee’s start date, day of the
+employee’s start date, the duplicated “leave_status_as_of_june_30”, the
+duplicated “work_location_borough”, the number of regular hours that the
+employee worked in the fiscal year, the amount paid to the employee for
+base salary during the fiscal year, and the overtime hours worked by the
 employee during the fiscal year were then removed from the data. The
 variables for county name, pay basis, and leave status were changed from
 a character data type to a factor. The variable for “title_description”
 was then duplicated and renamed into “job_title”. The duplicated
 “title_description” variable was then removed from the data. The data
-that was cleaned resulted in 594,234 records and 10 columns.</p></li>
-</ol>
+that was cleaned resulted in 594,234 records and 10 columns.</p>
 </div>
-<div id="eda" class="section level2">
-<h2>EDA</h2>
-<p>Exploratory analysis for our primary outcome of whether there is a
-significant difference in the mean base salary of employees in New York
-State by county in 2022.</p>
+<div id="exploratory-analysis" class="section level2">
+<h2>Exploratory Analysis</h2>
 <div id="mean-base-salary-by-new-york-state-counties"
 class="section level3">
 <h3>Mean Base Salary By New York State Counties</h3>
@@ -617,294 +599,35 @@ class="section level3">
   ggplot(aes(x = reorder(county_name, mean_base_salary), y = mean_base_salary, fill = county_name)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
   scale_y_continuous(
-      labels = scales::comma) +
+      labels = scales::comma,
+    limits = c(0, 110000),
+    breaks = seq(0, 110000, by = 27500)) +
   labs(
     x = &quot;County Names&quot;,
-    y = &quot;Mean Base Salary&quot;,
-    title = &quot;The Average Base Salary for Municipal Employees of New York State By County&quot;,
+    y = &quot;Mean Base Salary ($)&quot;,
+    title = &quot;Figure 1. The Average Base Salary for Municipal Employees of New York State By County&quot;, 
     fill = &quot;New York State County Names&quot;
   ) + 
   theme(axis.text.x = element_text(angle = 80, vjust = 0.5, hjust = 0.50)) 
 
 mean_base_salary_plot</code></pre>
 <p><img src="project_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
-<p>This figure (1) illustrates that Albany county has the highest mean
-base salary for its municipal employees, while Nassau county has the
-lowest average base salary and New York county has the second lowest
-mean base salary. All of the other counties have similar average base
-salaries. However, we hypothesized that New York county would have the
-highest mean salary as it serves as a major financial center within the
-United States compared to Albany county, which is the capital of New
-York State.</p>
-</div>
-<div id="total-other-pay-by-new-york-counties" class="section level3">
-<h3>Total Other Pay by New York Counties</h3>
-<p>An exploratory analysis was performed to understand the median total
-other pay for municipal employees throughout New York State by county in
-2022 through a boxplot.</p>
-<pre class="r"><code>median_tibble =
-  payroll_data %&gt;%
-  group_by(county_name) %&gt;%
-  summarise(median_total_other_pay = median(total_other_pay))
-
-median_other_pay_plot =
-  payroll_data %&gt;%
-  left_join(median_tibble, by = &quot;county_name&quot;) %&gt;%
-  ggplot(aes(x = reorder(county_name, median_total_other_pay), y = total_other_pay, fill = county_name)) +
-  geom_boxplot() +
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(-20000, 40000),
-    breaks = seq(-20000, 40000, by = 10000)) +
-  labs(
-    x = &quot;County Names&quot;,
-    y = &quot;Median Total Other Types of Pay&quot;,
-    title = &quot;The Median Total Other Pay for Municipal Employees of New York State By County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 0.5)) 
-
-median_other_pay_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
-<p>Figure (2) demonstrates that New York county has the lowest median
-for total other pay, which is relatively close to 0 dollars, while
-Schoharie county has the highest median for total other pay, which is
-relatively above 5000 dollars for municipal workers. We did not expect
-New York county to have the lowest median for total other pay, but
-instead be one of the counties with the highest median for total other
-pay due to the large population and number of job titles within this
-county. All of the other counties have relatively similar medians for
-total other pay in 2022. It is also important to note that New York
-county has the greatest number of outliers, which may be due to the
-large population within this county. Based on our previous finding,
-Queens, Bronx, and Kings counties also have high numbers of outliers,
-which may also be due to the large populations within these counties.
-There are counties that do not have any outliers, such as Sullivan,
-Delaware, Greene, and Orange counties. This figure also illustrates that
-there are employees in some of the counties that have negative values
-for other types of pay, which can include lump sums, meal allowance,
-settlement amounts, differentials, uniform allowance, retroactive pay
-increases, and bonus pay. These other forms of payment would explain why
-there are negative values for this variable.</p>
-</div>
-<div id="median-overtime-paid-by-new-york-state-counties"
-class="section level3">
-<h3>Median Overtime Paid By New York State Counties</h3>
-<p>Median total overtime pay for municipal employees in New York State
-by its counties in 2022 is displayed in the boxplot.</p>
-<pre class="r"><code>overtime_tibble = 
-    payroll_data %&gt;% 
-    group_by(county_name) %&gt;% 
-    summarise(median_total_ot_paid = median(total_ot_paid))
-
-median_ot_paid_plot = 
-    payroll_data |&gt; 
-    left_join(overtime_tibble, by = &quot;county_name&quot;) |&gt; 
-    ggplot(aes(x = reorder(county_name, median_total_ot_paid ), y = total_ot_paid,
-               fill = county_name)) +
-    geom_boxplot() +
-     scale_y_continuous(
-      labels = scales::comma,
-    limits = c(-5000, 32500),
-    breaks = seq(-5000, 32500, by = 5000)) +
-    labs(
-    x = &quot;County Names&quot;,
-    y = &quot;Total Overtime Paid&quot;,
-    title = &quot;Total Overtime Paid By Each County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-
-median_ot_paid_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
-<p>Figure (3) illustrated that New York county was among the lowest
-median counties for total overtime along with Albany, Nassau, New York
-and Orange which was close to 0 dollars, while Greene ranked highest
-median for total overtime pay with around 7000 dollars. This pattern is
-similar to that of New York County for median for total other pay where
-it placed the lowest. (graphic). We assumed that since New York County
-has a big market with more opportunities and its hard working lifestyle
-will allow employees to benefit more from overtime pay. This finding
-contracted with our hypothesis and median for prorated annual base
-salary (figure 4) where New York County ranked highest. In addition, it
-was noticeable that New York county has the greatest number of outliers,
-which may be due to the large population within this county whereas
-Greene, Orange and Dutchess counties did have outliers.</p>
-</div>
-<div
-id="median-base-salary-by-pay-basis-by-new-york-state-counties-annually"
-class="section level3">
-<h3>Median Base Salary By Pay basis By New York State Counties
-(Annually)</h3>
-<p>Boxplots was created to illustrate the differences in the median base
-salary by annually, daily, hourly, and based on prorated for all New
-York state counties .</p>
-<pre class="r"><code>pay_basis_tibble = 
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Annually&quot;) |&gt; 
-    group_by(county_name) %&gt;% 
-    summarise(median_base_salary = median(base_salary))
-
-Median_base_salary_plot_annually =
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Annually&quot;) |&gt; 
-    left_join(pay_basis_tibble, by = &quot;county_name&quot;) %&gt;%
-    ggplot(aes(x = reorder(county_name, median_base_salary), y = base_salary, 
-               fill = county_name)) +
-    geom_boxplot() +
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(20000, 150000),
-    breaks = seq(20000, 150000, by = 10000)) +
-    labs(
-    x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Annual Median Base Salary For Each County&quot;, 
-    fill = &quot;New York State County Names&quot;
-  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-Median_base_salary_plot_annually</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
-<p>Figure(4) shows the annual median base salary for municipal employees
-of New York State by county. According to this Figure(1), Orange,
-Greene, Putnam and Bronx has the lowest median base salary around 60,000
-for its municipal employees, whereas Albany has the highest median base
-salary with around 85, 000 USD followed by New York county. Compared to
-the mean base salary, median base salary in New York States was
-significantly higher and placed second from the top after Albany, which
-was similar to our hypothesis that New York County would have a higher
-income level.</p>
-</div>
-<div
-id="median-base-salary-by-pay-basis-by-new-york-state-counties-daily-plot"
-class="section level3">
-<h3>Median Base Salary By Pay basis By New York State Counties (Daily)
-Plot</h3>
-<pre class="r"><code>pay_basis_daily_tibble = 
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Daily&quot;) |&gt; 
-    group_by(county_name) |&gt; 
-    summarise(median_base_salary_daily = median(base_salary))
-
-Median_base_salary_plot_daily =
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Daily&quot;) |&gt; 
-    left_join(pay_basis_daily_tibble,  by = &quot;county_name&quot;) %&gt;%
-    ggplot(aes(x = reorder(county_name, median_base_salary_daily) , 
-               y = base_salary, fill = county_name)) +
-    geom_boxplot() +
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0,625),
-    breaks = seq(0, 625, by = 50)) +
-    labs(
-    x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Daily Median Base Salary For Each County&quot;, 
-    fill = &quot;New York State County Names&quot;
-  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-Median_base_salary_plot_daily</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
-<p>Figure(5) shows the daily median base salary for municipal employees
-of New York State by county. The daily median salary ranged between 50
-to 65 dollars. Figure b illustrates that Bronx, Delaware, Queens and
-Ulster have the lowest daily median base salary which was around 350
-dollars while Albany, Dutchess and Greene ranked highest with 500
-dollars. The rest of the counties placed in between above values. Daily
-median base salary for New York County has many outliers indicating that
-median values are not suitable to compute since the range of the daily
-base salary varied greatly.</p>
-</div>
-<div
-id="median-base-salary-by-pay-basis-by-new-york-state-counties-hourly"
-class="section level3">
-<h3>Median Base Salary By Pay basis By New York State Counties
-(Hourly)</h3>
-<pre class="r"><code>pay_basis_hourly_tibble= 
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
-    group_by(county_name) %&gt;%
-    summarise(median_base_salary_hourly = median(base_salary))
-
-Median_base_salary_plot_hourly =
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
-    left_join(pay_basis_hourly_tibble,  by = &quot;county_name&quot;) %&gt;%
-    ggplot(aes(x = reorder(county_name, median_base_salary_hourly), 
-               y = base_salary, fill = county_name)) +
-    geom_boxplot() +
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0,95),
-    breaks = seq(0,95, by = 10)) +
-    labs(
-    x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Hourly Median Base Salary For Each County&quot;,
-     fill = &quot;New York State County Names&quot;
-  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-Median_base_salary_plot_hourly</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
-<p>Figure(6) illustrates hourly median base salary for municipal
-employees of New York State by county. The hourly median salary ranged
-between 0 to 95 dollars. Figure 3 illustrates that New York County has
-the lowest hourly median base salary with 0 dollars while Nassau ranked
-highest around 65 to 70 dollars followed by Dutchess and Sullivan,
-Schoharie respectivly. It shows that highly populated counties have
-lower hourly median base salary compared to less populated counties.</p>
-</div>
-<div
-id="median-base-salary-by-pay-basis-by-new-york-state-counties-prorated"
-class="section level3">
-<h3>Median Base Salary By Pay basis By New York State Counties
-(Prorated)</h3>
-<pre class="r"><code>pay_basis_prorated_tibble = 
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
-    group_by(county_name) %&gt;%
-    summarise(median_base_salary_prorated = median(base_salary))  
-    
-Median_base_salary_plot_prorated =
-    payroll_data %&gt;%
-    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt;
-    left_join(pay_basis_prorated_tibble,  by = &quot;county_name&quot;) %&gt;%   
-    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), 
-               y = base_salary, fill = county_name)) +
-    geom_boxplot() +
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(5000,85000),
-    breaks = seq(5000, 85000, by = 10000)) +
-    labs(
-    x = &quot;County Names&quot;,
-    y = &quot; Base Salary&quot;,
-    title = &quot;Prorated Annual Median Base Salary For Each County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-
-Median_base_salary_plot_prorated</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
-<p>Figure(7) displays prorated median base salary for municipal
-employees of New York State by county. A prorated salary is when an
-employee gets paid based on the number of hours or days they work in a
-pay period, instead of their regular salary. When compared to annual
-median base salary, prorated median base salary was highest for Ulster
-followed by New York Country where Bronx and Richmond ranked the lowest.
-This indicates that employees in Ulster and New York Counties work
-longer hours and with extra days. This finding is in line with our
-hypothesis that the Median Base Salary for New York County was higher
-according to its prorated values.</p>
+<p>Exploratory analysis for our primary outcome of whether there is a
+significant difference in the mean base salary of employees in New York
+State by county in 2022 was conducted by creating a bar graph (Figure
+1). Figure 1 shows the average base salary for municipal employees of
+New York State by county. This figure illustrates that Albany county has
+the highest mean base salary for its municipal employees, while Nassau
+county has the lowest average base salary and New York county has the
+second lowest mean base salary. All of the other counties have similar
+average base salaries. However, we hypothesized that New York county
+would have the highest mean salary as it serves as a major financial
+center within the United States compared to Albany county, which is the
+capital of New York State.</p>
 </div>
 <div id="total-number-of-job-titles-by-new-york-state-counties-plot"
 class="section level3">
 <h3>Total Number of Job Titles by New York State Counties Plot</h3>
-<p>We also performed exploratory analysis by investigating the number of
-job titles that are held by municipal employees in New York State by
-county in 2022 through a bar graph.</p>
 <pre class="r"><code>number_job_titles_plot =
   payroll_data %&gt;%
   group_by(county_name, job_title) %&gt;%
@@ -921,38 +644,201 @@ county in 2022 through a bar graph.</p>
   labs(
     x = &quot;County Names&quot;,
     y = &quot;Number of Job Titles&quot;,
-    title = &quot;The Number of Job Titles Held By Municipal Employees of New York State By County&quot;,
+    title = &quot;Figure 2. The Number of Job Titles Held By Municipal Employees of New York State By County&quot;,
     fill = &quot;New York State County Names&quot;
   ) + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) </code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <pre class="r"><code>number_job_titles_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
-<p>Figure (8) conveys the number of job titles that are held by
-employees within each of the 16 counties in New York State. This figure
-demonstrates that Orange county has the lowest number of job titles,
-while Albany has the third lowest number of job titles. It is important
-to note that each of the five boroughs in New York City are among the
-counties that have the five highest counts of job titles that are held
-by municipal employees in 2022: New York county has the highest, which
-was expected; Queens county has the second highest number; Kings county
-has the third highest number; Bronx has the fourth highest number;
-Richmond has the fifth highest number. We did expect that New York
-county would have the highest number of job titles held by municipal
-employees and we also expected that the other boroughs of New York City
-would also have among the highest counts due to the large size of the
-populations within each of these counties within New York City. All of
-the other counties within New York State may have low frequencies of job
-titles that are held by municipal workers in 2022, because of their
-smaller population sizes.</p>
+<p><img src="project_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<p>We also performed exploratory analysis by investigating the number of
+job titles that are held by municipal employees in New York State by
+county in 2022 through a bar graph (Figure 2). Figure 2 conveys the
+number of job titles that are held by employees within each of the 16
+counties in New York State. This figure demonstrates that Orange county
+has the lowest number of job titles, while Albany has the third lowest
+number of job titles. It is important to note that each of the five
+boroughs in New York City are among the counties that have the five
+highest counts of job titles that are held by municipal employees in
+2022: New York county has the highest, which was expected; Queens county
+has the second highest number; Kings county has the third highest
+number; Bronx has the fourth highest number; Richmond has the fifth
+highest number. We did expect that New York county would have the
+highest number of job titles held by municipal employees and we also
+expected that the other boroughs of New York City would also have among
+the highest counts due to the large size of the populations within each
+of these counties within New York City. All of the other counties within
+New York State may have low frequencies of job titles that are held by
+municipal workers in 2022, because of their smaller population
+sizes.</p>
+</div>
+<div
+id="base-salary-by-annual-pay-basis-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Base Salary By Annual Pay Basis By New York State Counties Plot</h3>
+<p>Boxplots was created to illustrate the differences in the median base
+salary by annually, daily, hourly, and based on prorated for all New
+York state counties .</p>
+<pre class="r"><code>pay_basis_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Annually&quot;) |&gt; 
+    group_by(county_name) %&gt;% 
+    summarise(median_base_salary = median(base_salary))
+
+median_base_salary_plot_annually =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Annually&quot;) |&gt; 
+    left_join(pay_basis_tibble, by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary), y = base_salary, 
+               fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(20000, 150000),
+    breaks = seq(20000, 150000, by = 15000)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Figure 3. Base Salary For Annually-Paid Municipal Employees For Each New York State County&quot;, 
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+median_base_salary_plot_annually</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<p>Figure 3 shows the annual median base salary for municipal employees
+of New York State by county. According to this Figure , Orange, Greene,
+Putnam and Bronx has the lowest median base salary around 60,000 for its
+municipal employees, whereas Albany has the highest median base salary
+with around 85, 000 USD followed by New York county. Compared to the
+mean base salary, median base salary in New York States was
+significantly higher and placed second from the top after Albany, which
+was similar to our hypothesis that New York County would have a higher
+income level.</p>
+</div>
+<div id="base-salary-by-daily-pay-basis-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Base Salary By Daily Pay Basis By New York State Counties Plot</h3>
+<pre class="r"><code>pay_basis_daily_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Daily&quot;) |&gt; 
+    group_by(county_name) |&gt; 
+    summarise(median_base_salary_daily = median(base_salary))
+
+median_base_salary_plot_daily =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Daily&quot;) |&gt; 
+    left_join(pay_basis_daily_tibble,  by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary_daily) , 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,650),
+    breaks = seq(0, 650, by = 50)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Figure 4. Base Salary For Daily-Paid Municipal Employees For Each New York State County&quot;, 
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+median_base_salary_plot_daily</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p>Figure 4 shows the daily median base salary for municipal employees
+of New York State by county. The daily median salary ranged between 50
+to 65 dollars. Figure illustrates that Bronx, Delaware, Queens and
+Ulster have the lowest daily median base salary which was around 350
+dollars while Albany, Dutchess and Greene ranked highest with 500
+dollars. The rest of the counties placed in between above values. Daily
+median base salary for New York County has many outliers indicating that
+median values are not suitable to compute since the range of the daily
+base salary varied greatly.</p>
+</div>
+<div
+id="base-salary-by-hourly-pay-basis-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Base Salary By Hourly Pay Basis By New York State Counties Plot</h3>
+<pre class="r"><code>pay_basis_hourly_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
+    group_by(county_name) %&gt;%
+    summarise(median_base_salary_hourly = median(base_salary))
+
+median_base_salary_plot_hourly =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
+    left_join(pay_basis_hourly_tibble,  by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary_hourly), 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,95),
+    breaks = seq(0,95, by = 10)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Figure 5. Base Salary For Hourly-Paid Municipal Employees For Each New York State County&quot;,
+     fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+median_base_salary_plot_hourly</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+<p>Figure 5 illustrates hourly median base salary for municipal
+employees of New York State by county. The hourly median salary ranged
+between 0 to 95 dollars. Figure illustrates that New York County has the
+lowest hourly median base salary with 0 dollars while Nassau ranked
+highest around 65 to 70 dollars followed by Dutchess and Sullivan,
+Schoharie respectivly. It shows that highly populated counties have
+lower hourly median base salary compared to less populated counties.</p>
+</div>
+<div
+id="base-salary-by-prorated-annual-pay-basis-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Base Salary By Prorated Annual Pay Basis By New York State Counties
+Plot</h3>
+<pre class="r"><code>pay_basis_prorated_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
+    group_by(county_name) %&gt;%
+    summarise(median_base_salary_prorated = median(base_salary))  
+    
+median_base_salary_plot_prorated =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt;
+    left_join(pay_basis_prorated_tibble,  by = &quot;county_name&quot;) %&gt;%   
+    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(10000,80000),
+    breaks = seq(10000, 80000, by = 10000)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary ($)&quot;,
+    title = &quot;Figure 6. Base Salary For Prorated-Annually-Paid Municipal Employees For Each New York State County&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+
+median_base_salary_plot_prorated</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<p>Figure 6 displays prorated median base salary for municipal employees
+of New York State by county. A prorated salary is when an employee gets
+paid based on the number of hours or days they work in a pay period,
+instead of their regular salary. When compared to annual median base
+salary, prorated median base salary was highest for Ulster followed by
+New York Country where Bronx and Richmond ranked the lowest. This
+indicates that employees in Ulster and New York Counties work longer
+hours and with extra days. This finding is in line with our hypothesis
+that the Median Base Salary for New York County was higher according to
+its prorated values.</p>
 </div>
 <div id="top-10-job-titles-throughout-the-new-york-state-counties"
 class="section level3">
 <h3>Top 10 Job Titles Throughout the New York State Counties</h3>
-<p>Furthermore, an exploratory analysis was conducted to comprehend the
-top ten job titles that are held by municipal workers throughout the
-counties in New York State in 2022 through a bar graph.</p>
 <pre class="r"><code>job_frequency =
 payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
@@ -981,37 +867,38 @@ job_frequency_plot =
     limits = c(0, 120000),
     breaks = seq(0, 120000, by = 10000)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
-    title = &quot;The Top 10 Job Titles Held By Municipal Employees Throughout the Counties in New York State&quot;,
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
+    title = &quot;Figure 7. The Top 10 Job Titles Held By Municipal Employees Throughout the Counties in New York State&quot;,
     fill = &quot;New York State County Names&quot;
   ) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-11-1.png" width="90%" /></p>
-<p>Based on Figure (9), the top ten job titles by frequency are
-Correction Officer, School Aide, Police Officer, Substitute Education
-Paraprofessional, General Education Teacher, Special Education Teacher,
-Education Paraprofessional, Election Worker, Teacher, and Teacher Per
-Session, respectively in ascending order. The top 9 job titles by
-frequency were in New York county with Teacher Per Session being the job
-title with the highest frequency. The job title with the 10th highest
-frequency was in Queens county and was a Correction Officer. We did
-predict that one of the teacher job titles would be the job title with
-the highest frequency, but we did not expect that it would be the
-Teacher Per Session job title. We also expected that all of the top 10
-job titles with the highest frequencies would be in New York County.
-Overall, this figure supports some of our predictions and illustrates
-that the job title with the highest frequency in Queens is a Correction
-Officer.</p>
-</div>
+<p><img src="project_files/figure-html/unnamed-chunk-9-1.png" width="90%" /></p>
+<p>Furthermore, an exploratory analysis was conducted to comprehend the
+top ten job titles that are held by municipal workers throughout the
+counties in New York State in 2022 through a bar graph (Figure 7). Based
+on Figure 7, the top ten job titles by frequency are Correction Officer,
+School Aide, Police Officer, Substitute Education Paraprofessional,
+General Education Teacher, Special Education Teacher, Education
+Paraprofessional, Election Worker, Teacher, and Teacher Per Session,
+respectively in ascending order. The top 9 job titles by frequency were
+in New York county with Teacher Per Session being the job title with the
+highest frequency. The job title with the 10th highest frequency was in
+Queens county and was a Correction Officer. We did predict that one of
+the teacher job titles would be the job title with the highest
+frequency, but we did not expect that it would be the Teacher Per
+Session job title. We also expected that all of the top 10 job titles
+with the highest frequencies would be in New York County. Overall, this
+figure supports some of our predictions and illustrates that the job
+title with the highest frequency in Queens is a Correction Officer.</p>
 </div>
 <div
-id="the-top-five-job-titles-held-by-municipal-employees-in-six-new-york-state-counties"
-class="section level1">
-<h1>The Top Five Job Titles Held by Municipal Employees in Six New York
-State Counties</h1>
+id="the-top-five-job-titles-held-by-municipal-employees-in-six-new-york-state-counties-plot"
+class="section level3">
+<h3>The Top Five Job Titles Held by Municipal Employees in Six New York
+State Counties Plot</h3>
 <pre class="r"><code>top5_freq = 
   payroll_data %&gt;%
    filter(county_name %in% c(&quot;NEW YORK&quot;, &quot;KINGS&quot;, &quot;BRONX&quot;, &quot;QUEENS&quot;, &quot;RICHMOND&quot;,&quot;ALBANY&quot;)) %&gt;%
@@ -1037,19 +924,35 @@ scale_y_continuous(
   labels = scales::comma,
   limits = c(0,120000),
   breaks = seq(0, 120000, by = 15000)) + 
-labs(title = &quot;The Top Five Job Titles Held by Municipal Employees in Six New York State Counties&quot;,x = &quot;Job Title&quot;, y = &quot;Number of Municipal Employees&quot;)  + 
+labs(title = &quot;Figure 8. The Top Five Job Titles Held by Municipal Employees in Six New York State Counties&quot;,x = &quot;Job Title&quot;, y = &quot;Number of Municipal Employees&quot;)  + 
   guides(color = guide_legend(title = &quot;New York State County Names&quot;)) +
 theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 top_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-12-1.png" width="90%" /></p>
-<div id="top-10-job-titles-throughout-the-new-york-county"
+<p><img src="project_files/figure-html/unnamed-chunk-10-1.png" width="90%" /></p>
+<p>Since we are based in New York City ,NYC, we decided to look at the
+top 5 job titles for each of the counties for the 5 boroughs in NYC and
+compare that with top 5 job titles with the top 5 job titles in Albany
+county because Albany has the highest mean base salary. We choose
+Richmond county, Bronx county, Kings county, Queens county, and New York
+county as they all represent New York City which is one of the largest
+financial epicenters. These counties were also chosen because when
+looking at the bar graph for the number of job titles held by employees,
+you saw that the ones that had the most number of job titles were the
+counties that were selected. We conducted a scatterplot to see which
+county has a high number of specific job titles. Looking at the plot,
+you can see that in New York county, the number of teachers per session
+was 113,882 meaning that New York County has the highest number of
+teachers per session among the six counties. Queens county had the
+highest number of correction officers, 7,708. For Bronx county, their
+highest job title was a police officer, 3,807. However, it was Kings
+county who had the most police officers as they had 5,815. Albany county
+had the most number of assistant legislative representatives which was
+4.</p>
+</div>
+<div id="plot-for-top-10-job-titles-throughout-new-york-county"
 class="section level3">
-<h3>Top 10 Job Titles Throughout the New York County</h3>
-<p>Furthermore, an exploratory analysis on top jobs for New York County
-and Albany was conducted to comprehend our earlier analysis on Mean base
-salary where New York county ranked second lowest from mean base salary
-while Albany ranked highest Figure (11, 12).</p>
+<h3>Plot for Top 10 Job Titles Throughout New York County</h3>
 <pre class="r"><code>job_frequency_newyork =
 payroll_data %&gt;%
     filter(county_name == &quot;NEW YORK&quot;) |&gt; 
@@ -1072,26 +975,24 @@ payroll_data %&gt;%
     
 job_frequency_newyork_plot =
     job_frequency_newyork_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 10000)) +
+    breaks = seq(0, 120000, by = 20000)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
-    title = &quot;The Top 10 Job Titles Held By Municipal Employees in New York County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) +
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
+    title = &quot;Figure 9. The Top 10 Job Titles Held By Municipal Employees in New York County&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_newyork_plot</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-13-1.png" width="90%" /></p>
+<p><img src="project_files/figure-html/unnamed-chunk-11-1.png" width="90%" /></p>
 </div>
-<div id="top-10-job-titles-throughout-albany-county"
+<div id="plot-for-top-10-job-titles-throughout-albany-county"
 class="section level3">
-<h3>Top 10 Job Titles Throughout Albany County</h3>
+<h3>Plot for Top 10 Job Titles Throughout Albany County</h3>
 <pre class="r"><code>job_frequency_albany =
 payroll_data %&gt;%
     filter(county_name == &quot;ALBANY&quot;) |&gt; 
@@ -1105,46 +1006,166 @@ payroll_data %&gt;%
     job_frequency_albany %&gt;%
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
-     job_title = recode(job_title, &quot;TEACHER- PER SESSION&quot; = &quot;TEACHER PER SESSION&quot;),
-     job_title = recode(job_title, &quot;ANNUAL ED PARA&quot; = &quot;EDUCATION PARAPROFESSIONAL&quot;),
-     job_title = recode(job_title, &quot;TEACHER SPECIAL EDUCATION&quot; = &quot;SPECIAL EDUCATION TEACHER&quot;),
-     job_title = recode(job_title, &quot;TEACHER-GENERAL ED&quot; = &quot;GENERAL EDUCATION TEACHER&quot;),
-     job_title = recode(job_title, &quot;SUBSTITUTE ED PARA&quot; = &quot;SUBSTITUTE EDUCATION PARAPROFESSIONAL&quot;),
-     job_title = recode(job_title, &quot;F/T SCHOOL AIDE&quot; = &quot;SCHOOL AIDE&quot;))
+     job_title = recode(job_title, &quot;ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE&quot; = &quot;ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS&quot;))
     
 job_frequency_albany_plot =
     job_frequency_albany_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
     scale_y_continuous(
       labels = scales::comma,
     limits = c(0, 5),
     breaks = seq(0, 5, by = 1)) +
   labs(
-    x = &quot;Top 10 Job Titles&quot;,
-    y = &quot;Frequency of Job Titles&quot;,
-    title = &quot;The Top 10 Job Titles Held By Municipal Employeesin Albany County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) +
+    x = &quot;Job Titles&quot;,
+    y = &quot;Number of Municipal Employees&quot;,
+    title = &quot;Figure 10. The 6 Job Titles Held By Municipal Employees In Albany County&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
 job_frequency_albany_plot</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-12-1.png" width="90%" /></p>
+<p>Furthermore, an exploratory analysis on top jobs for New York County
+and Anbany was conducted to comprehend our earlier analysis on Mean base
+salary where New York county ranked second lowest from mean base salary
+while Albany ranked highest. We assumed that the top ten job titles
+would explain this finding. Based on figures 9 and 10, the top ten job
+titles in New York County are community associate, school aide, police
+officer, substitute education, election worker, teacher and Teacher Per
+Session. However, there were only 6 top titles in Albany, which are
+supervisor, assistant director, special assistant, watershed maintainer,
+assistant legislative representative. As we expected these top job
+titles explained our main finding on mean salary that top 6 job titles
+were higher rank jobs as compared to New York County.</p>
+</div>
+<div id="total-overtime-paid-by-new-york-state-counties-plot"
+class="section level3">
+<h3>Total Overtime Paid By New York State Counties Plot</h3>
+<pre class="r"><code>overtime_tibble = 
+    payroll_data %&gt;% 
+    group_by(county_name) %&gt;% 
+    summarise(median_total_ot_paid = median(total_ot_paid))
+
+median_ot_paid_plot = 
+    payroll_data |&gt; 
+    left_join(overtime_tibble, by = &quot;county_name&quot;) |&gt; 
+    ggplot(aes(x = reorder(county_name, median_total_ot_paid), y = total_ot_paid,
+    fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+    labels = scales::comma,
+    limits = c(-5000, 27500),
+    breaks = seq(-5000, 27500, by = 7500)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot;Total Overtime Paid ($)&quot;,
+    title = &quot;Figure 11. Total Overtime Paid By Each County in New York State&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+median_ot_paid_plot</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-13-1.png" width="90%" /></p>
+<p>Median total overtime pay for municipal employees in New York State
+by its counties in 2022 is displayed in the boxplot. Figure 11
+illustrated that New York county was among the lowest median counties
+for total overtime along with Albany, Nassau, New York and Orange which
+was close to 0 dollars, while Greene ranked highest median for total
+overtime pay with around 7000 dollars. This pattern is similar to that
+of New York County for median for total other pay where it placed the
+lowest Figure. We assumed that since New York County has a big market
+with more opportunities and its hard working lifestyle will allow
+employees to benefit more from overtime pay. This finding contracted
+with our hypothesis and median for prorated annual base salary Figure
+where New York County ranked highest. In addition, it was noticeable
+that New York county has the greatest number of outliers, which may be
+due to the large population within this county whereas Greene, Orange
+and Dutchess counties did have outliers.</p>
+</div>
+<div id="total-other-pay-by-new-york-counties-plot"
+class="section level3">
+<h3>Total Other Pay by New York Counties Plot</h3>
+<pre class="r"><code>median_tibble =
+  payroll_data %&gt;%
+  group_by(county_name) %&gt;%
+  summarise(median_total_other_pay = median(total_other_pay))
+
+median_other_pay_plot =
+  payroll_data %&gt;%
+  left_join(median_tibble, by = &quot;county_name&quot;) %&gt;%
+  ggplot(aes(x = reorder(county_name, median_total_other_pay), y = total_other_pay, fill = county_name)) +
+  geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(-20000, 40000),
+    breaks = seq(-20000, 40000, by = 10000)) +
+  labs(
+    x = &quot;County Names&quot;,
+    y = &quot;Total for Other Pay ($)&quot;,
+    title = &quot;Figure 12. The Total Other Pay for Municipal Employees of New York State By County&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 0.5)) 
+
+median_other_pay_plot</code></pre>
 <p><img src="project_files/figure-html/unnamed-chunk-14-1.png" width="90%" /></p>
-<p>We assumed that the top ten job titles would explain this finding.
-Based on Figure 6,7 , the top ten job titles in New York County are
-community associate, school aide, police officer, substitute education,
-election worker, teacher and Teacher Per Session. However, there were
-only 6 top titles in Albany, which are supervisor, assistant director,
-special assistant, watershed maintainer, assistant legislative
-representative. As we expected these top job titles explained our main
-finding on mean salary that top 6 job titles were higher rank jobs as
-compared to New York County.</p>
+<p>An exploratory analysis was performed to understand the median total
+other pay for municipal employees throughout New York State by county in
+2022 through a boxplot (Figure 12). Figure 12 demonstrates that New York
+county has the lowest median for total other pay, which is relatively
+close to 0 dollars, while Schoharie county has the highest median for
+total other pay, which is relatively above 5000 dollars for municipal
+workers. We did not expect New York county to have the lowest median for
+total other pay, but instead be one of the counties with the highest
+median for total other pay due to the large population and number of job
+titles within this county (Figure 2). All of the other counties have
+relatively similar medians for total other pay in 2022. It is also
+important to note that New York county has the greatest number of
+outliers, which may be due to the large population within this county.
+Based on figure 7, Queens, Bronx, and Kings counties also have high
+numbers of outliers, which may also be due to the large populations
+within these counties. There are counties that do not have any outliers,
+such as Sullivan, Delaware, Greene, and Orange counties. This figure
+also illustrates that there are employees in some of the counties that
+have negative values for other types of pay, which can include lump
+sums, meal allowance, settlement amounts, differentials, uniform
+allowance, retroactive pay increases, and bonus pay. These other forms
+of payment would explain why there are negative values for this
+variable.</p>
 </div>
 <div
-id="pie-chart-for-percentages-of-municipal-employees-by-leave-status-across-all-counties"
+id="bar-graph-for-the-number-of-municipal-employees-by-leave-status-in-new-york-state-plot"
+class="section level3">
+<h3>Bar Graph for the Number of Municipal Employees by Leave Status in
+New York State Plot</h3>
+<pre class="r"><code>Ls_bar = 
+  payroll_data %&gt;%
+  group_by(leave_status) %&gt;%
+  summarise(
+    count = n()
+    )
+
+ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
+geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+labs(
+    title = &quot;Figure 13. The Number of Municipal Employees by Leave Status in New York State&quot;,
+    x = &quot;Leave Status&quot;, 
+    y = &quot;Number of Municipal Employees&quot;, 
+    fill = &quot;Leave Status&quot; 
+    ) + 
+scale_y_continuous(labels = scales::comma)</code></pre>
+<p><img src="project_files/figure-html/unnamed-chunk-15-1.png" width="90%" /></p>
+<p>We also performed a bar graph to show the distribution of leave
+status. In 2022, there were a total of 594,234 municipal employees
+across New York state counties. The graph shows that 481,781 municipal
+employees had a leave status of active and 102,360 employees had a leave
+status of ceased. The remaining number of municipal employees, 10,093,
+were on leave.</p>
+</div>
+<div
+id="pie-chart-for-percentages-of-municipal-employees-by-leave-status-across-all-counties-plot"
 class="section level3">
 <h3>Pie Chart for Percentages of Municipal Employees by Leave Status
-Across All Counties</h3>
+Across All Counties Plot</h3>
 <pre class="r"><code>Total_ls = table(pull(payroll_data,leave_status))
 
 Total_ls</code></pre>
@@ -1158,32 +1179,23 @@ piepercent = round(100 * Total_ls / sum(Total_ls), 1)
 par(xpd = TRUE) 
 
 pie(Total_ls, labels = paste(labels, sep = &quot; &quot;, piepercent, &quot;%&quot;),
-    main = &quot;Percentages of Municipal Employees by Leave Status Across All Counties&quot;, col =       viridis(length(Total_ls)))
-legend(&quot;topright&quot;, c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;),cex = 0.9, fill = viridis(length(Total_ls)))</code></pre>
-<p><img src="project_files/figure-html/unnamed-chunk-15-1.png" width="90%" /></p>
-</div>
-<div
-id="bar-graph-for-the-number-of-municipal-employees-by-leave-status-in-new-york-state"
-class="section level3">
-<h3>Bar Graph for the Number of Municipal Employees by Leave Status in
-New York State</h3>
-<pre class="r"><code>Ls_bar = 
-  payroll_data %&gt;%
-  group_by(leave_status) %&gt;%
-  summarise(
-    count = n()
-    )
-
-ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
-geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-labs(
-    title = &quot;The Number of Municipal Employees by Leave Status in New York State&quot;,
-    x = &quot;Leave Status&quot;, 
-    y = &quot;Number of Municipal Employees&quot;, 
-    fill = &quot;Leave Status&quot; 
-    ) + 
-scale_y_continuous(labels = scales::comma)</code></pre>
+    main = &quot;Figure 14. Percentages of Municipal Employees by Leave Status Across All Counties&quot;, col =       viridis(length(Total_ls)))
+legend(&quot;topright&quot;, c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;),cex = 1.1, fill = viridis(length(Total_ls)))</code></pre>
 <p><img src="project_files/figure-html/unnamed-chunk-16-1.png" width="90%" /></p>
+<p>We want to look at leave status to know how many municipal employees
+were actively working, had stopped working at their jobs or were on
+leave. We constructed a pie chart which shows the percentages of leave
+status for all municipal employees in 2022. We assumed that the majority
+of the municipal employees across all New York state counties would have
+a leave status of active. 81.1 % of the municipal employees were
+actively working which was to be expected. 17.2 % of employees have
+stopped working at their municipal jobs and 1.7 municipal employees were
+on leave.</p>
+<p>Work Cited: 1. <a
+href="https://en.wikipedia.org/wiki/Economy_of_New_York_City#"
+class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_City#</a>:~:text=The%20economy%20of%20New%20York,the%20world’s%20premier%20financial%20center.
+<a href="https://en.wikipedia.org/wiki/Economy_of_New_York_(state)"
+class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_(state)</a></p>
 </div>
 </div>
 
