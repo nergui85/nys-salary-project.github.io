@@ -3,7 +3,7 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Exploratory Analyses"
+    - text: "Exploratory Analysis"
       menu:
       - text: "Base Salary"
         href: base_salary.html
