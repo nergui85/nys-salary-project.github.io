@@ -9,7 +9,7 @@ navbar:
         href: base_salary.html
       - text: "Job Titles and Leave Status"
         href: job_employees.html
-      - text: "Overtime and Other Pay"
+      - text: "Other Pay and Overtime"
         href: ot_other_pay.html 
     - text: "Statistical Analysis"
       menu: 
@@ -17,10 +17,10 @@ navbar:
         href: stat.html
     - text: "Project Report"
       href: project.html
+    - icon: fa-regular fa-dollar-sign
+      href: https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e
     - icon: fa fa-play-circle-o
       href: mailto:<you@youremail.com>
-    - icon: "References"
-      href: references.html      
     - icon: fa-github fa-lg
       href: https://github.com/nergui85/nys-salary-project.github.io/
 

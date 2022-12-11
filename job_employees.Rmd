@@ -125,8 +125,6 @@ top_plot =
 top_plot |> layout(
     yaxis = list(title = "Number of Employees"),title = "Top Five Job Titles in Six New York State Counties",x = "Job Title", y = "Number of Employees",
     xaxis = list(title = "New York State County Names"))
-
-top_plot
 ```
 
 
