@@ -36,6 +36,13 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -433,29 +440,21 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
     read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
 <div id="job-titles" class="section level3">
 <h3>Job Titles</h3>
-<pre class="r"><code>number_job_titles_plot =
+<pre class="r"><code>mean_base_salary_plot =
   payroll_data %&gt;%
   group_by(county_name, job_title) %&gt;%
   summarise(count = n()) %&gt;%
   ungroup() %&gt;% 
   group_by(county_name) %&gt;%
   summarise(count = n()) %&gt;%
-  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1375),
-    breaks = seq(0, 1375, by = 275)) +
-  labs(
-    x = &quot;County Names&quot;,
-    y = &quot;Number of Job Titles&quot;,
-    title = &quot;The Number of Job Titles Held By Municipal Employees in New York State By County&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+    plot_ly(x = ~ reorder(county_name, count), y = ~ count, color = ~county_name,  type = &quot;bar&quot;, colors = &quot;viridis&quot;)  
 
-number_job_titles_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+
+mean_base_salary_plot |&gt; layout(
+    yaxis = list(title = &quot;Number of Job Titles&quot;),title = &quot;The Number of Job Titles Held By Municipal Employees in New York State By County&quot;,
+                xaxis = list(title = &quot;County Names&quot;))</code></pre>
+<div id="htmlwidget-248322b12b6d2773b2da" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-248322b12b6d2773b2da">{"x":{"visdat":{"ae063bee8d13":["function () ","plotlyVisDat"]},"cur_data":"ae063bee8d13","attrs":{"ae063bee8d13":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Job Titles"},"title":"The Number of Job Titles Held By Municipal Employees in New York State By County","xaxis":{"domain":[0,1],"automargin":true,"title":"County Names","type":"category","categoryorder":"array","categoryarray":["ORANGE","GREENE","ALBANY","NASSAU","SCHOHARIE","PUTNAM","DUTCHESS","DELAWARE","SULLIVAN","ULSTER","WESTCHESTER","RICHMOND","BRONX","KINGS","QUEENS","NEW YORK"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["ALBANY"],"y":[6],"type":"bar","name":"ALBANY","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["BRONX"],"y":[454],"type":"bar","name":"BRONX","marker":{"color":"rgba(72,26,108,1)","line":{"color":"rgba(72,26,108,1)"}},"textfont":{"color":"rgba(72,26,108,1)"},"error_y":{"color":"rgba(72,26,108,1)"},"error_x":{"color":"rgba(72,26,108,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["DELAWARE"],"y":[20],"type":"bar","name":"DELAWARE","marker":{"color":"rgba(71,47,125,1)","line":{"color":"rgba(71,47,125,1)"}},"textfont":{"color":"rgba(71,47,125,1)"},"error_y":{"color":"rgba(71,47,125,1)"},"error_x":{"color":"rgba(71,47,125,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["DUTCHESS"],"y":[15],"type":"bar","name":"DUTCHESS","marker":{"color":"rgba(65,68,135,1)","line":{"color":"rgba(65,68,135,1)"}},"textfont":{"color":"rgba(65,68,135,1)"},"error_y":{"color":"rgba(65,68,135,1)"},"error_x":{"color":"rgba(65,68,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["GREENE"],"y":[5],"type":"bar","name":"GREENE","marker":{"color":"rgba(57,86,140,1)","line":{"color":"rgba(57,86,140,1)"}},"textfont":{"color":"rgba(57,86,140,1)"},"error_y":{"color":"rgba(57,86,140,1)"},"error_x":{"color":"rgba(57,86,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["KINGS"],"y":[653],"type":"bar","name":"KINGS","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"textfont":{"color":"rgba(49,104,142,1)"},"error_y":{"color":"rgba(49,104,142,1)"},"error_x":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["NASSAU"],"y":[6],"type":"bar","name":"NASSAU","marker":{"color":"rgba(42,120,142,1)","line":{"color":"rgba(42,120,142,1)"}},"textfont":{"color":"rgba(42,120,142,1)"},"error_y":{"color":"rgba(42,120,142,1)"},"error_x":{"color":"rgba(42,120,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["NEW YORK"],"y":[1308],"type":"bar","name":"NEW YORK","marker":{"color":"rgba(35,136,142,1)","line":{"color":"rgba(35,136,142,1)"}},"textfont":{"color":"rgba(35,136,142,1)"},"error_y":{"color":"rgba(35,136,142,1)"},"error_x":{"color":"rgba(35,136,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ORANGE"],"y":[1],"type":"bar","name":"ORANGE","marker":{"color":"rgba(31,152,139,1)","line":{"color":"rgba(31,152,139,1)"}},"textfont":{"color":"rgba(31,152,139,1)"},"error_y":{"color":"rgba(31,152,139,1)"},"error_x":{"color":"rgba(31,152,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["PUTNAM"],"y":[11],"type":"bar","name":"PUTNAM","marker":{"color":"rgba(34,168,132,1)","line":{"color":"rgba(34,168,132,1)"}},"textfont":{"color":"rgba(34,168,132,1)"},"error_y":{"color":"rgba(34,168,132,1)"},"error_x":{"color":"rgba(34,168,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["QUEENS"],"y":[749],"type":"bar","name":"QUEENS","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"textfont":{"color":"rgba(53,183,121,1)"},"error_y":{"color":"rgba(53,183,121,1)"},"error_x":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["RICHMOND"],"y":[294],"type":"bar","name":"RICHMOND","marker":{"color":"rgba(84,197,104,1)","line":{"color":"rgba(84,197,104,1)"}},"textfont":{"color":"rgba(84,197,104,1)"},"error_y":{"color":"rgba(84,197,104,1)"},"error_x":{"color":"rgba(84,197,104,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SCHOHARIE"],"y":[9],"type":"bar","name":"SCHOHARIE","marker":{"color":"rgba(122,209,81,1)","line":{"color":"rgba(122,209,81,1)"}},"textfont":{"color":"rgba(122,209,81,1)"},"error_y":{"color":"rgba(122,209,81,1)"},"error_x":{"color":"rgba(122,209,81,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["SULLIVAN"],"y":[33],"type":"bar","name":"SULLIVAN","marker":{"color":"rgba(165,219,54,1)","line":{"color":"rgba(165,219,54,1)"}},"textfont":{"color":"rgba(165,219,54,1)"},"error_y":{"color":"rgba(165,219,54,1)"},"error_x":{"color":"rgba(165,219,54,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ULSTER"],"y":[45],"type":"bar","name":"ULSTER","marker":{"color":"rgba(210,226,27,1)","line":{"color":"rgba(210,226,27,1)"}},"textfont":{"color":"rgba(210,226,27,1)"},"error_y":{"color":"rgba(210,226,27,1)"},"error_x":{"color":"rgba(210,226,27,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["WESTCHESTER"],"y":[71],"type":"bar","name":"WESTCHESTER","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>job_frequency =
 payroll_data %&gt;%
     group_by(county_name, job_title) %&gt;%
@@ -476,22 +475,13 @@ job_frequency_data =
     
 job_frequency_plot =
     job_frequency_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 10000)) +
-  labs(
-    x = &quot;Job Titles&quot;,
-    y = &quot;Number of Employees&quot;,
-    title = &quot;Top 10 Job Titles Throughout the Counties in New York State&quot;,
-    fill = &quot;New York State County Names&quot;
-  ) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-job_frequency_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name,  type = &quot;bar&quot;, colors = &quot;viridis&quot;)     
+    
+job_frequency_plot |&gt; layout(
+    yaxis = list(title = &quot;Number of Employees&quot;),title = &quot;Top 10 Job Titles Throughout the Counties in New York State&quot;,
+    xaxis = list(title = &quot;Job Titles&quot;))</code></pre>
+<div id="htmlwidget-69c5a298e73a3266e292" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-69c5a298e73a3266e292">{"x":{"visdat":{"ae061d4d3cf2":["function () ","plotlyVisDat"]},"cur_data":"ae061d4d3cf2","attrs":{"ae061d4d3cf2":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Employees"},"title":"Top 10 Job Titles Throughout the Counties in New York State","xaxis":{"domain":[0,1],"automargin":true,"title":"Job Titles","type":"category","categoryorder":"array","categoryarray":["CORRECTION OFFICER","SCHOOL AIDE","POLICE OFFICER","SUBSTITUTE EDUCATION PARAPROFESSIONAL","GENERAL EDUCATION TEACHER","SPECIAL EDUCATION TEACHER","EDUCATION PARAPROFESSIONAL","ELECTION WORKER","TEACHER","TEACHER PER SESSION"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["TEACHER PER SESSION","TEACHER","ELECTION WORKER","EDUCATION PARAPROFESSIONAL","SPECIAL EDUCATION TEACHER","GENERAL EDUCATION TEACHER","SUBSTITUTE EDUCATION PARAPROFESSIONAL","POLICE OFFICER","SCHOOL AIDE"],"y":[113882,57907,35452,33329,29422,16070,13507,9591,8826],"type":"bar","name":"NEW YORK","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["CORRECTION OFFICER"],"y":[7708],"type":"bar","name":"QUEENS","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>top5_freq = 
   payroll_data %&gt;%
    filter(county_name %in% c(&quot;NEW YORK&quot;, &quot;KINGS&quot;, &quot;BRONX&quot;, &quot;QUEENS&quot;, &quot;RICHMOND&quot;,&quot;ALBANY&quot;)) %&gt;%
@@ -542,21 +532,13 @@ job_frequency_newyork_data =
      job_title = recode(job_title, &quot;F/T SCHOOL AIDE&quot; = &quot;SCHOOL AIDE&quot;))
     
 job_frequency_newyork_plot =
-    job_frequency_newyork_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = &quot;county_name&quot;)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 20000)) +
-  labs(
-    x = &quot;Job Titles&quot;,
-    y = &quot;Number of Employees&quot;,
-    title = &quot;Top 10 Job Titles in New York County&quot;) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
-
-job_frequency_newyork_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+    job_frequency_newyork_data %&gt;% 
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name, type = &quot;bar&quot;, colors = &quot;viridis&quot;)
+  
+job_frequency_newyork_plot |&gt; layout(
+    yaxis = list(title = &quot;Number of Employees&quot;),title = &quot;Top 10 Job Titles in New York County&quot;, xaxis = list(title = &quot;Job Titles&quot;))</code></pre>
+<div id="htmlwidget-fb3bff8de297642543ec" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fb3bff8de297642543ec">{"x":{"visdat":{"ae06228d3ad6":["function () ","plotlyVisDat"]},"cur_data":"ae06228d3ad6","attrs":{"ae06228d3ad6":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Employees"},"title":"Top 10 Job Titles in New York County","xaxis":{"domain":[0,1],"automargin":true,"title":"Job Titles","type":"category","categoryorder":"array","categoryarray":["COMMUNITY ASSOCIATE","SCHOOL AIDE","POLICE OFFICER","SUBSTITUTE EDUCATION PARAPROFESSIONAL","GENERAL EDUCATION TEACHER","SPECIAL EDUCATION TEACHER","EDUCATION PARAPROFESSIONAL","ELECTION WORKER","TEACHER","TEACHER PER SESSION"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["TEACHER PER SESSION","TEACHER","ELECTION WORKER","EDUCATION PARAPROFESSIONAL","SPECIAL EDUCATION TEACHER","GENERAL EDUCATION TEACHER","SUBSTITUTE EDUCATION PARAPROFESSIONAL","POLICE OFFICER","SCHOOL AIDE","COMMUNITY ASSOCIATE"],"y":[113882,57907,35452,33329,29422,16070,13507,9591,8826,3847],"type":"bar","name":"NEW YORK","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>job_frequency_albany =
 payroll_data %&gt;%
     filter(county_name == &quot;ALBANY&quot;) |&gt; 
@@ -570,23 +552,16 @@ job_frequency_albany_data =
     top_n(job_frequency, n = 10) %&gt;%
     mutate(
      job_title = recode(job_title, &quot;ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE&quot; = &quot;ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS&quot;))
-    
-job_frequency_albany_plot =
-    job_frequency_albany_data %&gt;%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = &quot;county_name&quot;)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 5),
-    breaks = seq(0, 5, by = 1)) +
-  labs(
-    x = &quot;Job Titles&quot;,
-    y = &quot;Number of Employees&quot;,
-    title = &quot;The 6 Job Titles In Albany County&quot;) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
-job_frequency_albany_plot</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+
+job_frequency_albany_plot =
+    job_frequency_albany_data %&gt;% 
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name, type = &quot;bar&quot;, colors = &quot;viridis&quot;)
+  
+job_frequency_albany_plot |&gt; layout(
+    yaxis = list(title = &quot;Number of Employees&quot;),title = &quot;TThe 6 Job Titles In Albany County&quot;, xaxis = list(title = &quot;Job Titles&quot;))</code></pre>
+<div id="htmlwidget-50a86e74b7a4073c2f2f" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-50a86e74b7a4073c2f2f">{"x":{"visdat":{"ae0619b85ad8":["function () ","plotlyVisDat"]},"cur_data":"ae0619b85ad8","attrs":{"ae0619b85ad8":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Employees"},"title":"TThe 6 Job Titles In Albany County","xaxis":{"domain":[0,1],"automargin":true,"title":"Job Titles","type":"category","categoryorder":"array","categoryarray":["STATIONARY ENGINEER","SUPERVISOR","ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS","SPECIAL ASSISTANT","WATERSHED MAINTAINER","ASSISTANT LEGISLATIVE REPRESENTATIVE"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["ASSISTANT LEGISLATIVE REPRESENTATIVE","WATERSHED MAINTAINER","ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS","SPECIAL ASSISTANT","STATIONARY ENGINEER","SUPERVISOR"],"y":[4,3,2,2,1,1],"type":"bar","name":"ALBANY","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="leave-status" class="section level3">
 <h3>Leave Status</h3>
@@ -597,23 +572,17 @@ job_frequency_albany_plot</code></pre>
     count = n()
     )
 
-ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
-geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-labs(
-    title = &quot;The Number of Municipal Employees by Leave Status in New York State&quot;,
-    x = &quot;Leave Status&quot;, 
-    y = &quot;Number of Employees&quot;, 
-    fill = &quot;Leave Status&quot; 
-    ) + 
-scale_y_continuous(labels = scales::comma)</code></pre>
-<p><img src="job_employees_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+Ls_bar_bar =
+    Ls_bar %&gt;% 
+    plot_ly(x = ~ leave_status, y = ~ count, color = ~leave_status, type = &quot;bar&quot;, colors = &quot;viridis&quot;)
+  
+Ls_bar_bar|&gt; layout(
+    yaxis = list(title = &quot;Number of Employees&quot;),title = &quot;The Number of Municipal Employees by Leave Status in New York State&quot;, xaxis = list(title = &quot;Leave Status&quot;))</code></pre>
+<div id="htmlwidget-38a811837939c3deb146" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-38a811837939c3deb146">{"x":{"visdat":{"ae066f148cc2":["function () ","plotlyVisDat"]},"cur_data":"ae066f148cc2","attrs":{"ae066f148cc2":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Number of Employees"},"title":"The Number of Municipal Employees by Leave Status in New York State","xaxis":{"domain":[0,1],"automargin":true,"title":"Leave Status","type":"category","categoryorder":"array","categoryarray":["ACTIVE","CEASED","ON LEAVE"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["ACTIVE"],"y":[481781],"type":"bar","name":"ACTIVE","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,1)"},"error_y":{"color":"rgba(68,1,84,1)"},"error_x":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["CEASED"],"y":[102360],"type":"bar","name":"CEASED","marker":{"color":"rgba(33,144,141,1)","line":{"color":"rgba(33,144,141,1)"}},"textfont":{"color":"rgba(33,144,141,1)"},"error_y":{"color":"rgba(33,144,141,1)"},"error_x":{"color":"rgba(33,144,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["ON LEAVE"],"y":[10093],"type":"bar","name":"ON LEAVE","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,1)"},"error_y":{"color":"rgba(253,231,37,1)"},"error_x":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>Total_ls = table(pull(payroll_data,leave_status))
 
-Total_ls</code></pre>
-<pre><code>## 
-##   ACTIVE   CEASED ON LEAVE 
-##   481781   102360    10093</code></pre>
-<pre class="r"><code>labels = c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;)
+labels = c(&quot;Active&quot;, &quot;Ceased&quot;, &quot;On Leave&quot;)
 
 piepercent = round(100 * Total_ls / sum(Total_ls), 1)
 

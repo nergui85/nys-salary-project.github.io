@@ -435,61 +435,76 @@ theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code><
 <div id="motivation" class="section level2">
 <h2>Motivation</h2>
 <p>New York City (NYC) is recognized as having the largest regional
-economy in the United States (5).If an individual country, it would be
-ranked as the 10th largest global economy (6). Our motivation for this
-project is to use the skills that we have learned in Data Science I and
-apply them to answer imperative questions about NYC, such as which NYC
-borough yields the highest and lowest average total pay. This data would
-be determined by combining salary, overtime, and other pay from NYC’s
-2022 municipal employees ’payroll budget.</p>
-<p>Cities around the country suffered economic losses from the COVID-19
-pandemic and the prospects of a recession began stirring fears of an
-uncertain economy. City managers are more cautious about fiscal spending
-compared to previous years in response to COVID -19. As a result, many
-states and municipalities have made cuts, frozen spending and hiring,
-laid off workers and have reduced budgets. Our project will detail how
-the City’s budget is being spent on by conducting statistical analysis
-to evaluate the significant differences in base salary among New York
-State. This information should prove useful to the general public as
-well as for recent graduates looking for opportunities in NYC municipal
-employment.</p>
+economy in the United States (5). However, cities around the country
+suffered economic losses during the COVID-19 pandemic and the prospects
+of a recession are stirring fears of an uncertain economy. City managers
+are more cautious about fiscal spending compared to previous years in
+response to COVID-19. Our motivation is to use a dataset on NYC OpenData
+focused on the base salaries of municipal employees in New York State to
+better understand how the budget of several New York State counties are
+allocated toward salaries for the year 2022, two years after the
+COVID-19 pandemic began. We are interested in comprehending the mean
+base salaries of municipal employees for each county in New York State
+in 2022. As a result, we will perform statistical analysis through an
+ANOVA to determine if there is a significant difference in the mean base
+salary across all counties of New York State. If there is a significant
+difference, we would also like to know which counties exhibit a
+significant difference in the mean base salary of their municipal
+employees. We would also like to explore additional factors, such as the
+total other pay, overtime pay, the top job titles in certain counties,
+and the number of job titles by each county, within the data to see if
+they can explain the phenomenon that is observed with the base salaries
+of municipal employees.</p>
 </div>
 <div id="related-work" class="section level2">
 <h2>Related work</h2>
-<p>As the economy recovers in 2022, challenges are found in various
-sectors. (1). According to Omeyr, “Governments are being super cautious
-and very conservative when it comes to budgeting for the near future and
-for fiscal year 2022 and 2023”. The New York State Budget will total
-$220.5 billion in 2022-23. The Budget was adopted following two years of
+<p>In an article written by Kery Murakami, she explains the financial
+resources that the government allocated to cities. In 2022, the cities
+in the United States have been recovering from the negative impact of
+the COVID-19 pandemic. With inflation on the rise, city governments have
+been hesitant about spending. Farhad Kaab Omeyr, a Program Director for
+Research and Data at NLC’s Center for City Solutions, explained that:
+“Governments are being super cautious and fiscally conservative when it
+comes to budgeting for the near future and for fiscal year 2022 and
+2023”(1). The U.S government has assisted these cities by “providing
+$45.6 billion in direct federal pandemic aid for cities, along with
+another $19.5 billion for smaller-sized local governments”(1). These
+financial resources given by the government could possibly allow the New
+York City and New York State governments to allocate more funding to
+municipal agencies.</p>
+<p>According to Omeyr, “Governments are being super cautious and very
+conservative when it comes to budgeting for the near future and for
+fiscal year 2022 and 2023”. The New York State Budget will total $220.5
+billion in 2022-23. The Budget was adopted following two years of
 extraordinary volatility in State finances that began with the
 unprecedented economic disruptions caused by the COVID-19 pandemic and
 the prospect of steep revenue shortfalls. Due to Economic performance
 suppression, unanticipated revenues were generated and spending as
 increased greatly, both for temporary investments for pandemic-related
-needs and expanded or new commitments to existing programs (3).
-Allocating a budget on the payroll is one of the state’s duties. This
-data was obtained from the NYC Open data records. This dataset is
-provided by the Office of Payroll Administration (OPA).<br />
+needs and expanded or new commitments to existing programs (3).This data
+was obtained from the NYC Open data records and dataset is provided by
+the Office of Payroll Administration (OPA).<br />
 According to the Bureau of Labor Statistics (BLS), the median wage for
 workers in the United States in the second quarter of 2022 was about
-$1,041 per week or $54,132 per year (assuming 52 weeks of work per
-year). Wages were 5.2% higher than a year earlier (5). BLS statistics
-show that employment increased in all five New York City boroughs from
-March 2021 to March 2022 (2). Although most New York State residents
-earned incomes at least 400 percent of the federal poverty level (FPL),
-its median annual household income between 2011 and 2013 was lowest
-among its neighboring states, $51,962. The state had the highest
-proportion of residents who earned incomes below the FPL(4). Apparently
-this pattern has persisted throughout the years. It has proven in our
-data that the average base salary for municipal employees of New York
-county was among one of the lowest.</p>
+1,041 per week or 54,132 per year (assuming 52 weeks of work per year).
+Wages were 5.2% higher than a year earlier (6). BLS statistics show that
+employment increased in all five New York City boroughs from March 2021
+to March 2022 (2). Although most New York State residents earned incomes
+at least 400 percent of the federal poverty level (FPL), its median
+annual household income between 2011 and 2013 was lowest among its
+neighboring states, 51,962. The state had the highest proportion of
+residents who earned incomes below the FPL(4). Apparently this pattern
+has persisted throughout the years. It has proven in our data that the
+mean base salary for municipal employees of New York county was among
+one of the lowest.</p>
 </div>
 <div id="initial-questions" class="section level2">
 <h2>Initial Questions</h2>
 <ol style="list-style-type: decimal">
 <li>How many municipal employees in the New York State counties were
-active, have stopped working, or were on leave?</li>
-<li>Which New York State counties had the highest mean base salary?</li>
+actively working, have stopped working, or were on leave at the end of
+the fiscal year for 2022?</li>
+<li>Which New York State county had the highest mean base salary?</li>
 <li>Were there any New York State counties who gave more overtime pay to
 their municipal employees than others?</li>
 <li>Were there any differences in the median base salary among the
@@ -498,8 +513,9 @@ counties?</li>
 daily, hourly, and prorated annual pay basis?</li>
 <li>Is there a significant difference in the mean base salary across all
 counties?</li>
-<li>What percentage of all municipal employees are active, have ceased
-working, or are on leave?</li>
+<li>What percentage of all municipal employees are actively working,
+have ceased working, or are on leave at the end of the fiscal year in
+2022?</li>
 <li>Which counties have a significant difference in the mean base salary
 when compared to other counties?</li>
 </ol>
@@ -507,9 +523,9 @@ when compared to other counties?</li>
 variable. The new questions that we considered were:</p>
 <ol start="9" style="list-style-type: decimal">
 <li>What were the top 10 job titles throughout the New York State
-counties?</li>
+counties and the number of employees for each of those job titles?</li>
 <li>What were the top 5 job titles in Kings county, Albany county, New
-York county, Richmond county, and Queens county?</li>
+York county, Richmond county, Bronx county, and Queens county?</li>
 <li>What were the top 10 jobs in New York County?</li>
 <li>Which job title had the highest frequency in Albany county?</li>
 </ol>
@@ -1210,75 +1226,71 @@ Richmond.</p>
 <h2>Discussions</h2>
 <p>In our exploratory analysis, we looked at leave status, base salary,
 overtime pay, job titles, total other pay, and base salary by pay basis
-across New York State counties in 2022.</p>
-<p>Prior to computing the percentages and numbers of leave status
-employees for all 16 counties, we predicted that most of the municipal
-employees had an active leave status at the end of the fiscal year,
-which was true as the majority of the 594,234 employees were actively
-working. The remaining number of employees were either on leave or
-stopped working.</p>
-<p>When looking at the mean salary of municipal employees in New State
-York counties, we found it interesting that Albany had the highest mean
-base salary. We saw that there was a notable difference in the average
-base salary between New York County and Albany county. We assumed that
-the average base salary in New York county would be fairly high due to
-it being known as a financial hub in New York State and throughout the
-United States.</p>
+across New York State counties in 2022. Before calculating the
+percentages and numbers of leave-status employees for all 16 counties,
+we predicted that most municipal employees had an active leave status.
+This prediction was correct as most of the 594,234 employees were
+actively working. The majority of the remaining number of employees were
+ceased and very few were on leave.</p>
+<p>When looking at the mean salary of municipal employees in New York
+State counties, we found it interesting that Albany had the highest mean
+base salary. We identified a notable difference in the average base
+salary between the counties of New York and Albany. It was interesting
+that the average base salary in New York county was low compared to the
+majority of the New York State counties because it is known as a
+financial hub in the United States.</p>
 <p>Since Albany had the highest mean base salary, we decided to look at
-the job titles across all 16 counties in New York. We also expected that
-New York county would have the most number of job titles due its large
-population. When looking at the number of job titles in New York state
-counties, New York county did indeed have the highest number of job
-titles. Queens county had the second highest number, Kings county had
-the third highest number, and Bronx county had the fourth highest number
-of job titles. We found it interesting that Albany county had the third
-lowest number of job titles meaning that the variability of jobs is
-low.</p>
-<p>We also looked at the top 5 job titles across Bronx, Kings, Queens,
-New York, Richmond, and Albany counties. The most prominent job titles
-were Correction Officer, Assistant Legislative Representative, Teacher
-per session, and Police Officer. It was interesting that Albany had the
-fewest number of job titles, which was 6, and the highest mean base
-salary. The job title with the highest number of people in Albany county
-is the Assistant Legislative Representative. Four people had this job
-title. The other job titles for Albany were Watershed Maintainer,
-Assistant Director of Intergovernmental Relations for Albany, Special
-Assistant, Stationary Engineer and Supervisor. Overall, this information
+the job titles across all 16 counties in New York. We also expected New
+York county to have the most job titles due to its large population.
+When looking at the number of job titles in New York State counties, New
+York county, Queens county, Kings county, Bronx county, had the top four
+highest number of job titles, respectively. We found it interesting that
+Albany county had the third lowest number of job titles meaning that the
+variability of jobs is low.</p>
+<p>We also looked at the top 5 job titles in Bronx, Kings, Queens, New
+York, and Albany counties. The most prominent job titles were Correction
+Officer, Assistant Legislative Representative, and Teachers per Session.
+It was interesting that Albany had the fewest job titles, 6, even though
+Albany had the highest mean base salary. Overall, this information
 illustrates that certain job titles that pay higher base salaries can
 skew the data even though there are very few people with these job
 titles.</p>
-<p>We also looked at the total other pay for municipal employees across
-all New York State counties in 2022 and found that New York county had
-the lowest median total other pay, while Schoharie county had the
-highest, which was approximately more than 5,000 dollars for municipal
-employees. This was a result that we did not expect and we believed that
-New York county would also have the highest median total other pay. It
-is important to acknowledge that New York county had numerous outliers
-which could have been possible due to its large population and the large
-diversity of job titles. Other counties that had many outliers were
-Queens, Bronx, and Kings.</p>
-<p>In addition to looking at the mean base salary, we also chose to look
-at the median base salary by annual, daily, hourly, and prorated annual
-pay basis. Albany had the highest annual median base salary with New
-York county coming in second. For the daily median base salary, Albany,
-Dutchess, and Greene county had among the highest. Nassau county had the
-highest hourly median base salary. For the median prorated annual base
-salary, Ulster county had the highest followed by New York county.</p>
-<p>We also determined which county had the highest median total overtime
-pay for municipal employees in New York State counties in 2022. It was
-found that New York had the lowest median total overtime pay while
-Greene county had the highest.</p>
-<p>In our statistical analysis, specifically the ANOVA test, we claimed
-that there is a significant difference between the means of base salary
-for the New York State counties. This hypothesis was proven to be true
-as the p value was zero, which supported the rejection of the null
-hypothesis that there was no difference in the mean base salary among
-the counties. We also predicted that there would be significant
+<p>We also looked at the median total other pay for municipal employees
+across all of the New York State counties in 2022. We found out that New
+York county had the lowest median total other pay, while Schoharie
+county had the highest with approximately more than five thousand
+dollars for municipal employees. We did not expect this result and
+believed New York county would have the highest median for the total
+other pay. It is essential to acknowledge that New York county had
+numerous outliers, which could have been possibly due to its large
+population. Other counties that had many outliers were Queens, Bronx,
+and Kings.</p>
+<p>In addition to looking at the mean base salary, we also looked at the
+median base salary for employees that are paid annually, daily, hourly,
+and prorated annually. Albany had the highest median base salary for
+those that were paid annually followed by New York county. As for those
+that were paid daily, Albany, Dutchess, and Greene counties had the
+highest median base salary. Nassau county had the highest hourly median
+base salary. Ulster county had the highest median base salary for those
+that prorated annually, followed by New York county.</p>
+<p>We also investigated which county had the highest median overtime pay
+for municipal employees in New York State. New York county had the
+lowest median total overtime pay while Greene county had the highest. We
+found this interesting because Greene county’s small population may
+result in higher overtime pay while the large population in New York
+county may result in the opposite as more people would want to engage in
+overtime opportunities.</p>
+<p>In our statistical analysis, specifically the ANOVA test, we
+hypothesized that there is a significant difference between the means of
+base salary for the New York State counties. This hypothesis was proven
+to be true as the p value was zero, which supported the rejection of the
+null hypothesis that there was no difference in the mean base salary
+among the counties. We also predicted that there would be significant
 differences in the mean base salary between the counties. With the Tukey
 test, we saw that there were many significant differences in the mean
 base salary when comparing the counties among one another. Some
 significant differences were: New York and Albany, Kings and Bronx, New
-York and Bronx, Richmond and Kings, and Ulster and Kings. Ultimately, we
+York and Bronx, Richmond and Kings, and Queens and Bronx. Ultimately, we
 saw that most of the significant differences were between NYC’s 5
 boroughs and Albany as their p values were less than 0.05.</p>
 </div>
@@ -1298,8 +1310,8 @@ class="uri">https://www.osc.state.ny.us/reports/state-fiscal-year-2022-23-enacte
 class="uri">https://ballotpedia.org/New_York_state_budget_and_finances</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Economy_of_New_York_City"
 class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_City</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Economy_of_New_York_(state)"
-class="uri">https://en.wikipedia.org/wiki/Economy_of_New_York_(state)</a>.</li>
+<li><a href="https://www.bls.gov/news.release/pdf/wkyeng.pdf"
+class="uri">https://www.bls.gov/news.release/pdf/wkyeng.pdf</a></li>
 </ol>
 </div>
 

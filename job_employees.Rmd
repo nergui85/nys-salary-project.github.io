@@ -49,33 +49,26 @@ payroll_data =
 
 
 ```{r, message = FALSE, warning=FALSE}
-number_job_titles_plot =
+
+mean_base_salary_plot =
   payroll_data %>%
   group_by(county_name, job_title) %>%
   summarise(count = n()) %>%
   ungroup() %>% 
   group_by(county_name) %>%
   summarise(count = n()) %>%
-  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
-  geom_bar(position = "dodge", stat = "identity") +
-  scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 1375),
-    breaks = seq(0, 1375, by = 275)) +
-  labs(
-    x = "County Names",
-    y = "Number of Job Titles",
-    title = "The Number of Job Titles Held By Municipal Employees in New York State By County",
-    fill = "New York State County Names"
-  ) + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+    plot_ly(x = ~ reorder(county_name, count), y = ~ count, color = ~county_name,  type = "bar", colors = "viridis")  
 
-number_job_titles_plot
+
+mean_base_salary_plot |> layout(
+    yaxis = list(title = "Number of Job Titles"),title = "The Number of Job Titles Held By Municipal Employees in New York State By County",
+                xaxis = list(title = "County Names"))
 ```
 
 
 
 ```{r, message = FALSE, warning=FALSE}
+
 job_frequency =
 payroll_data %>%
     group_by(county_name, job_title) %>%
@@ -96,21 +89,12 @@ job_frequency_data =
     
 job_frequency_plot =
     job_frequency_data %>%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 10000)) +
-  labs(
-    x = "Job Titles",
-    y = "Number of Employees",
-    title = "Top 10 Job Titles Throughout the Counties in New York State",
-    fill = "New York State County Names"
-  ) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name,  type = "bar", colors = "viridis")     
+    
+job_frequency_plot |> layout(
+    yaxis = list(title = "Number of Employees"),title = "Top 10 Job Titles Throughout the Counties in New York State",
+    xaxis = list(title = "Job Titles"))
 
-job_frequency_plot
 ```
 
 
@@ -150,6 +134,7 @@ top_plot
 
 
 ```{r, message = FALSE, warning=FALSE}
+
 job_frequency_newyork =
 payroll_data %>%
     filter(county_name == "NEW YORK") |> 
@@ -170,20 +155,12 @@ job_frequency_newyork_data =
      job_title = recode(job_title, "F/T SCHOOL AIDE" = "SCHOOL AIDE"))
     
 job_frequency_newyork_plot =
-    job_frequency_newyork_data %>%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = "county_name")) +
-  geom_bar(position = "dodge", stat = "identity") + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 120000),
-    breaks = seq(0, 120000, by = 20000)) +
-  labs(
-    x = "Job Titles",
-    y = "Number of Employees",
-    title = "Top 10 Job Titles in New York County") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+    job_frequency_newyork_data %>% 
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name, type = "bar", colors = "viridis")
+  
+job_frequency_newyork_plot |> layout(
+    yaxis = list(title = "Number of Employees"),title = "Top 10 Job Titles in New York County", xaxis = list(title = "Job Titles"))
 
-job_frequency_newyork_plot
 ```
 
 
@@ -202,22 +179,15 @@ job_frequency_albany_data =
     top_n(job_frequency, n = 10) %>%
     mutate(
      job_title = recode(job_title, "ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE" = "ASSISTANT DIRECTOR OF INTERGOVERNMENTAL RELATIONS"))
-    
-job_frequency_albany_plot =
-    job_frequency_albany_data %>%
-    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = "county_name")) +
-  geom_bar(position = "dodge", stat = "identity") + 
-    scale_y_continuous(
-      labels = scales::comma,
-    limits = c(0, 5),
-    breaks = seq(0, 5, by = 1)) +
-  labs(
-    x = "Job Titles",
-    y = "Number of Employees",
-    title = "The 6 Job Titles In Albany County") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
 
-job_frequency_albany_plot
+
+job_frequency_albany_plot =
+    job_frequency_albany_data %>% 
+    plot_ly(x = ~ reorder(job_title, job_frequency), y = ~ job_frequency, color = ~county_name, type = "bar", colors = "viridis")
+  
+job_frequency_albany_plot |> layout(
+    yaxis = list(title = "Number of Employees"),title = "TThe 6 Job Titles In Albany County", xaxis = list(title = "Job Titles"))
+
 ```
 
 ### Leave Status 
@@ -230,23 +200,19 @@ Ls_bar =
     count = n()
     )
 
-ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + 
-geom_bar(position = "dodge", stat = "identity") + 
-labs(
-    title = "The Number of Municipal Employees by Leave Status in New York State",
-    x = "Leave Status", 
-    y = "Number of Employees", 
-    fill = "Leave Status" 
-    ) + 
-scale_y_continuous(labels = scales::comma)
+Ls_bar_bar =
+    Ls_bar %>% 
+    plot_ly(x = ~ leave_status, y = ~ count, color = ~leave_status, type = "bar", colors = "viridis")
+  
+Ls_bar_bar|> layout(
+    yaxis = list(title = "Number of Employees"),title = "The Number of Municipal Employees by Leave Status in New York State", xaxis = list(title = "Leave Status"))
+
 ```
 
 
 
 ```{r, message = FALSE, warning=FALSE}
 Total_ls = table(pull(payroll_data,leave_status))
-
-Total_ls
 
 labels = c("Active", "Ceased", "On Leave")
 
